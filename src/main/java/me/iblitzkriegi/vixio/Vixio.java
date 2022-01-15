@@ -103,6 +103,7 @@ public class Vixio extends JavaPlugin {
             this.getDataFolder().mkdirs();
         }
         getConfig().addDefault("enable warnings", true);
+        getConfig().addDefault("receive own messages", false);
         getConfig().options().copyDefaults(true);
         saveConfig();
 //        Metrics metrics = new Metrics(this);
