@@ -24,6 +24,7 @@ public class VixioCommand implements CommandExecutor {
                         return true;
                     }
                     Vixio.getInstance().reloadConfig();
+                    Vixio.receiveOwnMessages = Vixio.getInstance().getConfig().getBoolean("receive own messages", false);
                     sendMessage(sender, "Successfully reloaded Vixio's config.");
                     return true;
                 } else if (args[0].equalsIgnoreCase("debug")) {

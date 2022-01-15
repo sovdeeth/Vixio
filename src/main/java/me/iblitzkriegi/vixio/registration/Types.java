@@ -32,27 +32,6 @@ public class Types {
 
     @SuppressWarnings("unchecked")
     public static void register() {
-
-        EnumUtils<Region> regionEnumUtils = new EnumUtils<>(Region.class, "regions");
-        new SimpleType<Region>(Region.class, "serverregion", "serverregions?") {
-
-            @Override
-            public Region parse(String s, ParseContext pc) {
-                return regionEnumUtils.parse(s);
-            }
-
-            @Override
-            public boolean canParse(ParseContext pc) {
-                return true;
-            }
-
-            @Override
-            public String toString(Region region, int arg1) {
-                return regionEnumUtils.toString(region, arg1);
-            }
-
-        };
-
         EnumUtils<Guild.VerificationLevel> verificationLevelUtils = new EnumUtils<>(Guild.VerificationLevel.class, "verificationlevels");
         new SimpleType<Guild.VerificationLevel>(Guild.VerificationLevel.class, "verificationlevel", "verificationlevelss?") {
 

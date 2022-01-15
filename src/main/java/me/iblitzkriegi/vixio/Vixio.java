@@ -48,6 +48,8 @@ public class Vixio extends JavaPlugin {
     // Old Skript Verification \\
     public static boolean useOldSkript;
 
+    public static boolean receiveOwnMessages = false;
+
 
     public Vixio() {
         if (instance == null) {
@@ -106,6 +108,7 @@ public class Vixio extends JavaPlugin {
         getConfig().addDefault("receive own messages", false);
         getConfig().options().copyDefaults(true);
         saveConfig();
+        receiveOwnMessages = getConfig().getBoolean("receive own messages", false);
 //        Metrics metrics = new Metrics(this);
         Documentation.setupSyntaxFile();
         this.getCommand("vixio").setExecutor(new VixioCommand());

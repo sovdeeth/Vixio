@@ -50,6 +50,7 @@ public class EffMarkGametype extends Effect {
             return;
         }
         switch (gameType) {
+            case PLAYING:
             case WATCHING:
             case LISTENING:
                 bot.getJDA().getPresence().setActivity(Activity.of(gameType, title));

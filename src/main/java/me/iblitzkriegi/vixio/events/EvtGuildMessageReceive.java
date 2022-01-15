@@ -81,14 +81,12 @@ public class EvtGuildMessageReceive extends BaseEvent<MessageReceivedEvent> {
         return super.init(exprs, matchedPattern, parser);
     }
 
-    private boolean receiveOwnMessages = Vixio.getInstance().getConfig().getBoolean("receive own messages", false);
-
     @Override
     public boolean check(MessageReceivedEvent e) {
         if(e.isFromGuild()) {
             if (sent && Util.botFromID(e.getAuthor().getId()) != null) { // if the mode is sent and the author is one of our bots
                 return super.check(e);
-            } else if (!sent && (receiveOwnMessages || Util.botFromID(e.getAuthor().getId()) == null)) { // if the mode is receive and the author isn't one of our bots
+            } else if (!sent && (Vixio.receiveOwnMessages || Util.botFromID(e.getAuthor().getId()) == null)) { // if the mode is receive and the author isn't one of our bots
                 return super.check(e);
             }
         }
