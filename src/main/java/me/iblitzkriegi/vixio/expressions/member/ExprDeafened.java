@@ -58,7 +58,7 @@ public class ExprDeafened extends ChangeableSimplePropertyExpression<Member, Boo
     @Override
     public void change(Event e, Object[] delta, Bot bot, Changer.ChangeMode mode) {
         for (Member member : getExpr().getAll(e)) {
-            boolean state = mode == Changer.ChangeMode.RESET ? false : (Boolean) delta[0];
+            boolean state = mode != Changer.ChangeMode.RESET && (Boolean) delta[0];
             member.getGuild().deafen(member, state).queue();
         }
     }

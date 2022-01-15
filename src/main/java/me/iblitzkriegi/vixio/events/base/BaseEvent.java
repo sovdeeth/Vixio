@@ -3,11 +3,7 @@ package me.iblitzkriegi.vixio.events.base;
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.config.Config;
-import ch.njol.skript.lang.Literal;
-import ch.njol.skript.lang.SelfRegisteringSkriptEvent;
-import ch.njol.skript.lang.SkriptEventInfo;
-import ch.njol.skript.lang.SkriptParser;
-import ch.njol.skript.lang.Trigger;
+import ch.njol.skript.lang.*;
 import ch.njol.skript.log.SkriptLogger;
 import me.iblitzkriegi.vixio.Vixio;
 import me.iblitzkriegi.vixio.registration.Registration;
@@ -28,7 +24,7 @@ public abstract class BaseEvent<D extends net.dv8tion.jda.api.events.Event> exte
      * The ending appended to patterns if no custom ending is specified
      */
     public static final String APPENDED_ENDING = "[seen by %-string%]";
-    private Map<Class<?>, Object> valueMap = new HashMap<>();
+    private final Map<Class<?>, Object> valueMap = new HashMap<>();
     private String stringRepresentation;
     private Trigger trigger;
     private EventListener<D> listener;
@@ -198,8 +194,8 @@ public abstract class BaseEvent<D extends net.dv8tion.jda.api.events.Event> exte
 
     public class Value {
 
-        private VixioGetter<D, Object> getter;
-        private Class<?> clazz;
+        private final VixioGetter<D, Object> getter;
+        private final Class<?> clazz;
 
         public Value(Class<?> clazz, VixioGetter<D, Object> getter) {
             this.getter = getter;

@@ -4,8 +4,8 @@ import me.iblitzkriegi.vixio.util.wrapper.Bot;
 import net.dv8tion.jda.api.entities.Guild;
 
 public class MusicStorage {
-    private Bot bot;
-    private Guild guild;
+    private final Bot bot;
+    private final Guild guild;
 
     public MusicStorage(Bot bot, Guild guild) {
         this.bot = bot;

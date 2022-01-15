@@ -1,6 +1,5 @@
 package me.iblitzkriegi.vixio.util.wrapper;
 
-import javafx.scene.media.AudioTrack;
 import me.iblitzkriegi.vixio.util.audio.GuildMusicManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
@@ -11,11 +10,11 @@ import net.dv8tion.jda.api.entities.SelfUser;
 import java.util.HashMap;
 
 public class Bot implements IMentionable, ISnowflake {
-    private String name;
+    private final String name;
 
-    private JDA jda;
-    private SelfUser selfUser;
-    private HashMap<Guild, GuildMusicManager> guildMusicManagerMap = new HashMap<>();
+    private final JDA jda;
+    private final SelfUser selfUser;
+    private final HashMap<Guild, GuildMusicManager> guildMusicManagerMap = new HashMap<>();
     private long uptime;
 
     public Bot(String name, JDA jda) {

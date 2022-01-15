@@ -10,6 +10,7 @@ import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.skript.AsyncEffect;
 import me.iblitzkriegi.vixio.util.skript.SkriptUtil;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
+import net.dv8tion.jda.api.entities.BaseGuildMessageChannel;
 import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.Invite;
 import net.dv8tion.jda.api.exceptions.PermissionException;
@@ -46,7 +47,7 @@ public class EffCreateInvite extends AsyncEffect {
             return;
         }
         try {
-            Invite invite = channel.createInvite().complete();
+            Invite invite = ((BaseGuildMessageChannel) channel).createInvite().complete();
             if (varExpr != null) {
                 Util.storeInVar(varName, varExpr, invite.getUrl(), e);
             }

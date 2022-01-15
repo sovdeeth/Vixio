@@ -51,7 +51,7 @@ public class ExprChannelNsfw extends ChangeableSimplePropertyExpression<TextChan
         for (TextChannel channel : getExpr().getAll(e)) {
             channel = Util.bindChannel(bot, channel);
             if (channel != null) {
-                channel.getManager().setNSFW(mode == Changer.ChangeMode.RESET ? false : (Boolean) delta[0]).queue();
+                channel.getManager().setNSFW(mode != Changer.ChangeMode.RESET && (Boolean) delta[0]).queue();
             }
         }
     }

@@ -55,7 +55,7 @@ public class EffGrabMessages extends AsyncEffect {
                 .limit(messages.intValue())
                 .map(UpdatingMessage::from)
                 .collect(Collectors.toList());
-        this.updatingMessages = updatingMessages;
+        EffGrabMessages.updatingMessages = updatingMessages;
         if (varExpr != null) {
             Util.storeInVar(varName, varExpr, updatingMessages, e);
         }

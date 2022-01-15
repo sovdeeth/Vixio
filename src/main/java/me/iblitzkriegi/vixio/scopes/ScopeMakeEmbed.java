@@ -58,7 +58,7 @@ public class ScopeMakeEmbed extends EffectSection {
         lastEmbed = embed == null ? new EmbedBuilder() : embed;
         runSection(e);
         if (matchedPattern == 1) {
-            Bot bot = Util.botFrom(this.bot.getSingle(e));
+            Bot bot = Util.botFrom(ScopeMakeEmbed.bot.getSingle(e));
             if (bot == null) {
                 return;
             }
@@ -67,9 +67,9 @@ public class ScopeMakeEmbed extends EffectSection {
                     MessageChannel messageChannel = Util.getMessageChannel(bot, source);
                     if (messageChannel != null) {
                         if (varExpr == null) {
-                            messageChannel.sendMessage(embed.build()).queue();
+                            messageChannel.sendMessageEmbeds(embed.build()).queue();
                         } else {
-                            Message resultingMessage = messageChannel.sendMessage(embed.build()).complete(true);
+                            Message resultingMessage = messageChannel.sendMessageEmbeds(embed.build()).complete(true);
                             if (resultingMessage != null) {
                                 Util.storeInVar(varName, varExpr, UpdatingMessage.from(resultingMessage), e);
                             }
@@ -93,9 +93,9 @@ public class ScopeMakeEmbed extends EffectSection {
                     return;
                 }
                 if (varExpr == null) {
-                    boundChannel.sendMessage(embed.build()).queue();
+                    boundChannel.sendMessageEmbeds(embed.build()).queue();
                 } else {
-                    Message resultingMessage = boundChannel.sendMessage(embed.build()).complete(true);
+                    Message resultingMessage = boundChannel.sendMessageEmbeds(embed.build()).complete(true);
                     if (resultingMessage != null) {
                         Util.storeInVar(varName, varExpr, UpdatingMessage.from(resultingMessage), e);
                     }

@@ -2,18 +2,14 @@ package me.iblitzkriegi.vixio.commands;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.classes.ClassInfo;
-import ch.njol.skript.lang.Expression;
-import ch.njol.skript.lang.ParseContext;
-import ch.njol.skript.lang.SkriptParser;
-import ch.njol.skript.lang.Variable;
-import ch.njol.skript.lang.VariableString;
+import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.log.RetainingLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.util.Utils;
 import ch.njol.skript.variables.Variables;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.WeakHashMap;
 
@@ -36,7 +32,7 @@ public class DiscordArgument<T> {
 
     private final boolean optional;
 
-    private transient WeakHashMap<Event, T[]> current = new WeakHashMap<Event, T[]>();
+    private final transient WeakHashMap<Event, T[]> current = new WeakHashMap<Event, T[]>();
 
     private DiscordArgument(@Nullable final String name, final @Nullable Expression<? extends T> def, final ClassInfo<T> type, final boolean single, final int index, final boolean optional) {
         this.name = name;
@@ -95,7 +91,7 @@ public class DiscordArgument<T> {
     @Override
     public String toString() {
         final Expression<? extends T> def = this.def;
-        return "<" + (name != null ? name + ": " : "") + Utils.toEnglishPlural(type.getCodeName(), !single) + (def == null ? "" : " = " + def.toString()) + ">";
+        return "<" + (name != null ? name + ": " : "") + Utils.toEnglishPlural(type.getCodeName(), !single) + (def == null ? "" : " = " + def) + ">";
     }
 
     public boolean isOptional() {

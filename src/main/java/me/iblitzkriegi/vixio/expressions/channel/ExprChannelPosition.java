@@ -5,9 +5,7 @@ import me.iblitzkriegi.vixio.Vixio;
 import me.iblitzkriegi.vixio.changers.ChangeableSimplePropertyExpression;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
-import net.dv8tion.jda.api.entities.GuildChannel;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.exceptions.PermissionException;
 import org.bukkit.event.Event;
 
@@ -35,7 +33,7 @@ public class ExprChannelPosition extends ChangeableSimplePropertyExpression<Obje
         if (object instanceof Role) {
             return ((Role) object).getPosition();
         } else if (object instanceof GuildChannel) {
-            return ((GuildChannel) object).getPosition();
+            return ((BaseGuildMessageChannel) object).getPosition();
         }
         return null;
     }
@@ -61,7 +59,7 @@ public class ExprChannelPosition extends ChangeableSimplePropertyExpression<Obje
                 GuildChannel boundChannel = Util.bindChannel(bot, (GuildChannel) object);
                 if (boundChannel != null) {
                     try {
-                        boundChannel.getManager().setPosition(position).queue();
+                        ((BaseGuildMessageChannel) boundChannel).getManager().setPosition(position).queue();
                     } catch (PermissionException x) {
                         Vixio.getErrorHandler().needsPerm(bot, "set position of channel", x.getPermission().getName());
                     }

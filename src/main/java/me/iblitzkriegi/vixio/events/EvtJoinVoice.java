@@ -6,11 +6,7 @@ import me.iblitzkriegi.vixio.events.base.BaseEvent;
 import me.iblitzkriegi.vixio.events.base.SimpleVixioEvent;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
-import net.dv8tion.jda.api.entities.GuildChannel;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 
 public class EvtJoinVoice extends BaseEvent<GuildVoiceJoinEvent> {
@@ -46,7 +42,7 @@ public class EvtJoinVoice extends BaseEvent<GuildVoiceJoinEvent> {
         EventValues.registerEventValue(JoinVoiceEvent.class, VoiceChannel.class, new Getter<VoiceChannel, JoinVoiceEvent>() {
             @Override
             public VoiceChannel get(JoinVoiceEvent event) {
-                return event.getJDAEvent().getChannelJoined();
+                return (VoiceChannel) event.getJDAEvent().getChannelJoined();
             }
         }, 0);
 

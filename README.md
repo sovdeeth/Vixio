@@ -38,17 +38,7 @@ Documentation for Vixio can be found at `plugins/Vixio/Syntaxes.txt` after Vixio
 
 # Compiling
 
-Vixio uses Gradle for compilation.
-
-### Linux / Mac
-```
-./gradlew clean build
-```
-
-### Windows
-```
-gradlew.bat clean build
-```
+Vixio uses Maven for compilation.
 
 # Contact
 <a href="https://discord.gg/kNHmqYH"><img src="https://discordapp.com/api/v7/guilds/236641445363056651/widget.png?style=banner3"></a>

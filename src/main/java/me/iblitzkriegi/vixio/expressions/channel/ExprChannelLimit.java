@@ -56,7 +56,7 @@ public class ExprChannelLimit extends ChangeableSimplePropertyExpression<GuildCh
                 channel = Util.bindVoiceChannel(bot, (VoiceChannel) channel);
                 if (channel != null) {
                     try {
-                        channel.getManager().setUserLimit(mode == Changer.ChangeMode.DELETE ? 0 : (((Number) delta[0]).intValue())).queue();
+                        ((VoiceChannel) channel).getManager().setUserLimit(mode == Changer.ChangeMode.DELETE ? 0 : (((Number) delta[0]).intValue())).queue();
                     } catch (PermissionException ex) {
                         Vixio.getErrorHandler().needsPerm(bot, mode.name().toLowerCase() + " user limit", ex.getPermission().getName());
                     }

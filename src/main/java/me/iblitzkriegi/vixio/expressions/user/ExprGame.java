@@ -77,7 +77,7 @@ public class ExprGame extends SimplePropertyExpression<Object, String> {
         for (Object object : getExpr().getAll(e)) {
             if (Util.botFrom(object) != null) {
                 Bot bot = Util.botFrom(object);
-                bot.getJDA().getPresence().setActivity(mode == Changer.ChangeMode.SET ? Activity.of(Activity.ActivityType.DEFAULT, (String) delta[0]) : null);
+                bot.getJDA().getPresence().setActivity(mode == Changer.ChangeMode.SET ? Activity.of(Activity.ActivityType.PLAYING, (String) delta[0]) : null);
             }
         }
     }

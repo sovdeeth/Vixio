@@ -105,7 +105,7 @@ public class Vixio extends JavaPlugin {
         getConfig().addDefault("enable warnings", true);
         getConfig().options().copyDefaults(true);
         saveConfig();
-        Metrics metrics = new Metrics(this);
+//        Metrics metrics = new Metrics(this);
         Documentation.setupSyntaxFile();
         this.getCommand("vixio").setExecutor(new VixioCommand());
         useOldSkript = (Skript.getVersion().getMajor() >= 3 || (Skript.getVersion().getMajor() == 2 && Skript.getVersion().getMinor() >= 4));

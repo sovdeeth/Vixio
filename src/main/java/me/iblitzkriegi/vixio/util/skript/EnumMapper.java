@@ -12,16 +12,15 @@ import java.io.StreamCorruptedException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Stream;
 
 public class EnumMapper<E extends Enum<E>> {
 
 	private static final HashMap<String, String> LANG_MAP =
 			ReflectionUtils.getField(Language.class, null, "english");
 
-	private Class<E> clazz;
-	private Map<String, E> parseMap = new HashMap<>();
-	private String node;
+	private final Class<E> clazz;
+	private final Map<String, E> parseMap = new HashMap<>();
+	private final String node;
 
 	public static <C extends Enum<C>> SimpleType<C> register(Class<C> clazz, String name, String pattern) {
 		Validate.notNull(clazz, name, pattern);

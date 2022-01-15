@@ -5,7 +5,6 @@ import ch.njol.skript.lang.VariableString;
 import ch.njol.skript.util.Date;
 import ch.njol.skript.variables.Variables;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
-import com.sedmelluq.discord.lavaplayer.source.AudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.soundcloud.SoundCloudAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioTrack;
@@ -23,24 +22,14 @@ import me.iblitzkriegi.vixio.util.wrapper.Bot;
 import me.iblitzkriegi.vixio.util.wrapper.Emote;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.MessageBuilder;
-import net.dv8tion.jda.api.entities.GuildChannel;
-import net.dv8tion.jda.api.entities.ChannelType;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.PrivateChannel;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.exceptions.RateLimitedException;
 import net.dv8tion.jda.api.requests.RestAction;
-
 import net.dv8tion.jda.internal.requests.CompletedRestAction;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 
-import java.awt.Color;
+import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Array;
@@ -49,14 +38,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 public class Util {
 
@@ -64,17 +47,17 @@ public class Util {
 
     public static YoutubeAudioSourceManager youtubeSourceManager;
 
-    private static HashMap<String, Color> colors = new HashMap<>();
+    private static final HashMap<String, Color> colors = new HashMap<>();
 
-    private static DefaultAudioPlayerManager defaultAudioPlayerManager = new DefaultAudioPlayerManager();
-    private static YoutubeSearchProvider youtubeSearchProvider =
+    private static final DefaultAudioPlayerManager defaultAudioPlayerManager = new DefaultAudioPlayerManager();
+    private static final YoutubeSearchProvider youtubeSearchProvider =
             new YoutubeSearchProvider();
-    private static SoundCloudAudioSourceManager soundCloudSearchProvider = SoundCloudAudioSourceManager.createDefault();
+    private static final SoundCloudAudioSourceManager soundCloudSearchProvider = SoundCloudAudioSourceManager.createDefault();
 
     static {
         try {
             for (Field color : Color.class.getDeclaredFields()) {
-                color.setAccessible(true);
+//                color.setAccessible(true);
                 if (color.getType() == Color.class) {
                     colors.put(color.getName().toLowerCase(Locale.ENGLISH).replace("_", " "), (Color) color.get(null));
                 }
@@ -225,11 +208,7 @@ public class Util {
             TextChannel textChannel = bot.getJDA().getTextChannelById(channel.getId());
             if (privateChannel != null) {
                 return privateChannel;
-            } else if (textChannel != null) {
-                return textChannel;
-            }
-
-            return null;
+            } else return textChannel;
         } else {
             return channel;
         }

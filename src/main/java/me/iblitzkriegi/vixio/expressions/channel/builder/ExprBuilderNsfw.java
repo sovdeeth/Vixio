@@ -49,7 +49,7 @@ public class ExprBuilderNsfw extends SimplePropertyExpression<ChannelBuilder, Bo
     @Override
     public void change(Event e, Object[] delta, Changer.ChangeMode mode) {
         for (ChannelBuilder builder : getExpr().getAll(e)) {
-            builder.setNSFW(mode == Changer.ChangeMode.RESET ? false : (Boolean) delta[0]);
+            builder.setNSFW(mode != Changer.ChangeMode.RESET && (Boolean) delta[0]);
         }
     }
 }

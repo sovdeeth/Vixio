@@ -13,6 +13,8 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.exceptions.PermissionException;
 import org.bukkit.event.Event;
 
+import java.util.Objects;
+
 public class EffMoveMember extends Effect {
     static {
         Vixio.getInstance().registerEffect(EffMoveMember.class, "move %member% to %channel/voicechannel% [with %bot/string%]")
@@ -43,7 +45,7 @@ public class EffMoveMember extends Effect {
             return;
         }
         VoiceChannel voiceChannel = Util.bindVoiceChannel(bot, (VoiceChannel) object);
-        if (voiceChannel == null || (!(member.getVoiceState().inVoiceChannel()))) {
+        if (voiceChannel == null || (!(Objects.requireNonNull(member.getVoiceState()).inAudioChannel()))) {
             return;
         }
         try {

@@ -3,9 +3,9 @@ package me.iblitzkriegi.vixio.util.wrapper;
 import net.dv8tion.jda.api.entities.User;
 
 public class Avatar {
-    private User user;
-    private String avatar;
-    private boolean isDefault;
+    private final User user;
+    private final String avatar;
+    private final boolean isDefault;
 
     public Avatar(User user, String avatar, boolean isDefault) {
         this.user = user;

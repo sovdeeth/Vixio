@@ -1,9 +1,5 @@
 package me.iblitzkriegi.vixio.expressions.guild.role;
 
-import java.awt.Color;
-
-import org.bukkit.event.Event;
-
 import ch.njol.skript.classes.Changer;
 import me.iblitzkriegi.vixio.Vixio;
 import me.iblitzkriegi.vixio.changers.ChangeableSimplePropertyExpression;
@@ -12,6 +8,9 @@ import me.iblitzkriegi.vixio.util.wrapper.Bot;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.exceptions.PermissionException;
+import org.bukkit.event.Event;
+
+import java.awt.*;
 
 public class ExprRoleColor extends ChangeableSimplePropertyExpression<Role, Color> {
     static {

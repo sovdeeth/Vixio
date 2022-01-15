@@ -124,14 +124,14 @@ public class DiscordCommandRegistry extends SelfRegisteringSkriptEvent {
 
         String originalName = ScriptLoader.getCurrentEventName();
         Class<? extends Event>[] originalEvents = ScriptLoader.getCurrentEvents();
-        Kleenean originalDelay = ScriptLoader.hasDelayBefore;
+        Kleenean originalDelay = ScriptLoader.getHasDelayBefore();
         ScriptLoader.setCurrentEvent("discord command", DiscordCommandEvent.class);
 
         DiscordCommand cmd = DiscordCommandFactory.getInstance().add(sectionNode);
         command = cmd == null ? command : cmd.getName();
 
         ScriptLoader.setCurrentEvent(originalName, originalEvents);
-        ScriptLoader.hasDelayBefore = originalDelay;
+        ScriptLoader.setHasDelayBefore(originalDelay);
         nukeSectionNode(sectionNode);
 
         return cmd != null;

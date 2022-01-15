@@ -8,10 +8,10 @@ import net.dv8tion.jda.api.entities.Role;
 import java.util.List;
 
 public class Emote implements IMentionable {
-    private String name;
+    private final String name;
     private net.dv8tion.jda.api.entities.Emote emote;
     private boolean isEmote = false;
-    private String mention;
+    private final String mention;
 
     public Emote(String name) {
         this.name = name;
@@ -50,7 +50,7 @@ public class Emote implements IMentionable {
     }
 
     public boolean isAnimated() {
-        return isEmote ? emote.isAnimated() : false;
+        return isEmote && emote.isAnimated();
     }
 
     public String getID() {

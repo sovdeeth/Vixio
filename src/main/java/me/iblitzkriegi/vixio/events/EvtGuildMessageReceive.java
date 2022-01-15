@@ -4,20 +4,16 @@ import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Getter;
+import me.iblitzkriegi.vixio.Vixio;
 import me.iblitzkriegi.vixio.events.base.BaseEvent;
 import me.iblitzkriegi.vixio.events.base.SimpleVixioEvent;
 import me.iblitzkriegi.vixio.util.UpdatingMessage;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
-import net.dv8tion.jda.api.entities.GuildChannel;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class EvtGuildMessageReceive extends BaseEvent<GuildMessageReceivedEvent> {
+public class EvtGuildMessageReceive extends BaseEvent<MessageReceivedEvent> {
 
     static {
         BaseEvent.register("guild message received", "(1¦receive[d] [seen]|2¦ sent) [by %-string%]",
@@ -29,7 +25,7 @@ public class EvtGuildMessageReceive extends BaseEvent<GuildMessageReceivedEvent>
         EventValues.registerEventValue(GuildMessageReceiveEvent.class, GuildChannel.class, new Getter<GuildChannel, GuildMessageReceiveEvent>() {
             @Override
             public GuildChannel get(GuildMessageReceiveEvent event) {
-                return event.getJDAEvent().getChannel();
+                return (GuildChannel) event.getJDAEvent().getChannel();
             }
         }, 0);
         EventValues.registerEventValue(GuildMessageReceiveEvent.class, MessageChannel.class, new Getter<MessageChannel, GuildMessageReceiveEvent>() {
@@ -85,17 +81,21 @@ public class EvtGuildMessageReceive extends BaseEvent<GuildMessageReceivedEvent>
         return super.init(exprs, matchedPattern, parser);
     }
 
+    private boolean receiveOwnMessages = Vixio.getInstance().getConfig().getBoolean("receive own messages", false);
+
     @Override
-    public boolean check(GuildMessageReceivedEvent e) {
-        if (sent && Util.botFromID(e.getAuthor().getId()) != null) { // if the mode is sent and the author is one of our bots
-            return super.check(e);
-        } else if (!sent && Util.botFromID(e.getAuthor().getId()) == null) { // if the mode is receive and the author isn't one of our bots
-            return super.check(e);
+    public boolean check(MessageReceivedEvent e) {
+        if(e.isFromGuild()) {
+            if (sent && Util.botFromID(e.getAuthor().getId()) != null) { // if the mode is sent and the author is one of our bots
+                return super.check(e);
+            } else if (!sent && (receiveOwnMessages || Util.botFromID(e.getAuthor().getId()) == null)) { // if the mode is receive and the author isn't one of our bots
+                return super.check(e);
+            }
         }
         return false;
     }
 
-    public class GuildMessageReceiveEvent extends SimpleVixioEvent<GuildMessageReceivedEvent> {
+    public class GuildMessageReceiveEvent extends SimpleVixioEvent<MessageReceivedEvent> {
     }
 
 }

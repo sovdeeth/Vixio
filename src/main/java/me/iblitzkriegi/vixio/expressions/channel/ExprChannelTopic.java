@@ -5,6 +5,7 @@ import me.iblitzkriegi.vixio.Vixio;
 import me.iblitzkriegi.vixio.changers.ChangeableSimplePropertyExpression;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
+import net.dv8tion.jda.api.entities.BaseGuildMessageChannel;
 import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.exceptions.PermissionException;
@@ -17,7 +18,7 @@ public class ExprChannelTopic extends ChangeableSimplePropertyExpression<GuildCh
                 "topic", "channels")
                 .setName("Topic of Text Channel")
                 .setDesc("Get or set the topic of a text channel. You may also delete the topic to reset it.")
-                .setUserFacing("the] topic[s] of %textchannels%" ,"%textchannels%'[s] topic[s]")
+                .setUserFacing("[the] topic[s] of %textchannels%" ,"%textchannels%'[s] topic[s]")
                 .setExample("set topic of event-channel to \"Hi Pika\" with event-bot");
     }
 
@@ -50,7 +51,7 @@ public class ExprChannelTopic extends ChangeableSimplePropertyExpression<GuildCh
                 channel = Util.bindChannel(bot, (TextChannel) channel);
                 if (channel != null) {
                     try {
-                        channel.getManager().setTopic(mode == Changer.ChangeMode.DELETE ? null : (String) delta[0]).queue();
+                        ((BaseGuildMessageChannel) channel).getManager().setTopic(mode == Changer.ChangeMode.DELETE ? null : (String) delta[0]).queue();
                     } catch (PermissionException ex) {
                         Vixio.getErrorHandler().needsPerm(bot, mode.name().toLowerCase() + " topic", ex.getPermission().getName());
                     }

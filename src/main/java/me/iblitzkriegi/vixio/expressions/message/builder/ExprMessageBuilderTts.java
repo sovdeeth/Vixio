@@ -54,7 +54,7 @@ public class ExprMessageBuilderTts extends SimplePropertyExpression<MessageBuild
     @Override
     public void change(Event e, Object[] delta, Changer.ChangeMode mode) {
         for (MessageBuilder builder : getExpr().getAll(e)) {
-            builder.setTTS(mode == Changer.ChangeMode.RESET ? false : (Boolean) delta[0]);
+            builder.setTTS(mode != Changer.ChangeMode.RESET && (Boolean) delta[0]);
         }
     }
 

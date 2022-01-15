@@ -5,6 +5,7 @@ import me.iblitzkriegi.vixio.Vixio;
 import me.iblitzkriegi.vixio.changers.ChangeableSimplePropertyExpression;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
+import net.dv8tion.jda.api.entities.BaseGuildMessageChannel;
 import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.exceptions.PermissionException;
@@ -65,7 +66,7 @@ public class ExprSlowMode extends ChangeableSimplePropertyExpression<GuildChanne
                         continue;
                     }
                     try {
-                        boundChannel.getManager().setSlowmode(new_mode.intValue()).queue();
+                        ((TextChannel) boundChannel).getManager().setSlowmode(new_mode.intValue()).queue();
                     } catch (PermissionException x) {
                         Vixio.getErrorHandler().needsPerm(bot, "Set slowmode of channel", x.getPermission().getName());
                     }

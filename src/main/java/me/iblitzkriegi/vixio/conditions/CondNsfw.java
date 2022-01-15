@@ -35,7 +35,7 @@ public class CondNsfw extends Condition implements EasyMultiple<Object, Void> {
             if (o instanceof ChannelBuilder) {
                 return ((ChannelBuilder) o).isNSFW();
             } else {
-                return o instanceof TextChannel ? ((TextChannel)o).isNSFW() : false;
+                return o instanceof TextChannel && ((TextChannel) o).isNSFW();
             }
         }, isNegated());
     }

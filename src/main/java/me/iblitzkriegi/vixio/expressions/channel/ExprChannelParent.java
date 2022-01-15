@@ -5,6 +5,7 @@ import me.iblitzkriegi.vixio.Vixio;
 import me.iblitzkriegi.vixio.changers.ChangeableSimplePropertyExpression;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
+import net.dv8tion.jda.api.entities.BaseGuildMessageChannel;
 import net.dv8tion.jda.api.entities.Category;
 import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.exceptions.PermissionException;
@@ -29,7 +30,7 @@ public class ExprChannelParent extends ChangeableSimplePropertyExpression<GuildC
 
     @Override
     public Category convert(GuildChannel channel) {
-        return channel.getParent();
+        return ((BaseGuildMessageChannel) channel).getParentCategory();
     }
 
     @Override
@@ -56,7 +57,7 @@ public class ExprChannelParent extends ChangeableSimplePropertyExpression<GuildC
             channel = Util.bindChannel(bot, channel);
             if (channel != null) {
                 try {
-                    channel.getManager().setParent((Category) delta[0]).queue();
+                    ((BaseGuildMessageChannel) channel).getManager().setParent((Category) delta[0]).queue();
                 } catch (PermissionException ex) {
                     Vixio.getErrorHandler().needsPerm(bot, "set category", ex.getPermission().getName());
                 }
