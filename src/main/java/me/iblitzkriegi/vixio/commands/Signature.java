@@ -1,8 +1,8 @@
 package me.iblitzkriegi.vixio.commands;
 
 public class Signature {
-    private String name;
-    private DiscordCommand command;
+    private final String name;
+    private final DiscordCommand command;
 
     public Signature(String name, DiscordCommand command) {
         this.name = name;

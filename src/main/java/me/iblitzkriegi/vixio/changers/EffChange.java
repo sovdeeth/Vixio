@@ -43,7 +43,7 @@ import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.skript.SkriptUtil;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -57,7 +57,7 @@ public class EffChange extends Effect {
 
     public static Bot currentBot;
     private static boolean parsing;
-    private static Patterns<ChangeMode> patterns = new Patterns<>(new Object[][]{
+    private static final Patterns<ChangeMode> patterns = new Patterns<>(new Object[][]{
             {"(add|give) %objects% to (%~objects%) [(with|using) %-bot/string%]", ChangeMode.ADD},
             {"increase %~objects% by (%objects%) [(with|using) %-bot/string%]", ChangeMode.ADD},
             {"give %~objects% (%objects%) as %-bot/string%", ChangeMode.ADD},
@@ -75,7 +75,7 @@ public class EffChange extends Effect {
     });
 
     static {
-        Skript.getInstance().registerEffect(EffChange.class, patterns.getPatterns());
+        Skript.registerEffect(EffChange.class, patterns.getPatterns());
     }
 
     @SuppressWarnings("null")

@@ -5,16 +5,8 @@ import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.config.Node;
 import ch.njol.skript.config.SectionNode;
-import ch.njol.skript.lang.Condition;
-import ch.njol.skript.lang.Expression;
-import ch.njol.skript.lang.SkriptParser;
-import ch.njol.skript.lang.TriggerItem;
-import ch.njol.skript.lang.TriggerSection;
-import ch.njol.skript.log.HandlerList;
-import ch.njol.skript.log.LogHandler;
-import ch.njol.skript.log.ParseLogHandler;
-import ch.njol.skript.log.RetainingLogHandler;
-import ch.njol.skript.log.SkriptLogger;
+import ch.njol.skript.lang.*;
+import ch.njol.skript.log.*;
 import ch.njol.util.Kleenean;
 import ch.njol.util.StringUtils;
 import me.iblitzkriegi.vixio.util.ReflectionUtils;
@@ -104,7 +96,7 @@ public abstract class EffectSection extends Condition {
     }
 
     /**
-     * It is to replicate {@link ch.njol.skript.lang.Effect#execute(Event)}
+     * It is to replicate ch.njol.skript.lang.Effect#execute(Event)
      *
      * @param e - The Event
      */
@@ -170,11 +162,11 @@ public abstract class EffectSection extends Condition {
         if (section != null && name != null && events != null && events.length > 0) {
             String previousName = ScriptLoader.getCurrentEventName();
             Class<? extends Event>[] previousEvents = ScriptLoader.getCurrentEvents();
-            Kleenean previousDelay = ScriptLoader.hasDelayBefore;
+            Kleenean previousDelay = ScriptLoader.getHasDelayBefore();
             ScriptLoader.setCurrentEvent(name, events);
             loadSection(setNext);
             ScriptLoader.setCurrentEvent(previousName, previousEvents);
-            ScriptLoader.hasDelayBefore = previousDelay;
+            ScriptLoader.setHasDelayBefore(previousDelay);
         }
     }
 

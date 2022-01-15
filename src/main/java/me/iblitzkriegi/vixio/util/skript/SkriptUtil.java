@@ -63,7 +63,7 @@ public class SkriptUtil {
 
     public static Expression<Member> combineUserAndGuild(Expression<User> user, Expression<Guild> guild) {
         ExprMember member = new ExprMember();
-        member.init(new Expression[] {user, guild}, 0, ScriptLoader.hasDelayBefore, null);
+        member.init(new Expression[] {user, guild}, 0, ScriptLoader.getHasDelayBefore(), null);
         return member;
     }
 

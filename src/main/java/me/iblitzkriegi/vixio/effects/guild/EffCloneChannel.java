@@ -1,15 +1,19 @@
 package me.iblitzkriegi.vixio.effects.guild;
 
-import ch.njol.skript.lang.*;
+import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.SkriptParser;
+import ch.njol.skript.lang.Variable;
+import ch.njol.skript.lang.VariableString;
 import ch.njol.util.Kleenean;
 import me.iblitzkriegi.vixio.Vixio;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.skript.AsyncEffect;
 import me.iblitzkriegi.vixio.util.skript.SkriptUtil;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
-import net.dv8tion.jda.api.entities.GuildChannel;
+import net.dv8tion.jda.api.entities.BaseGuildMessageChannel;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.exceptions.PermissionException;
 import org.bukkit.event.Event;
 
@@ -53,9 +57,9 @@ public class EffCloneChannel extends AsyncEffect {
         }
         try {
             if (varExpr == null) {
-                boundChannel.createCopy(boundGuild).setName(name).queue();
+                ((BaseGuildMessageChannel) boundChannel).createCopy(boundGuild).setName(name).queue();
             } else {
-                GuildChannel copiedChannel = boundChannel.createCopy(boundGuild).setName(name).complete();
+                GuildChannel copiedChannel = ((BaseGuildMessageChannel) boundChannel).createCopy(boundGuild).setName(name).complete();
                 Util.storeInVar(varName, varExpr, copiedChannel, e);
             }
         } catch (PermissionException x) {

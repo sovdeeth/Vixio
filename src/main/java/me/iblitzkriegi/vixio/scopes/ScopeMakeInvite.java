@@ -9,6 +9,7 @@ import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.scope.EffectSection;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
 import me.iblitzkriegi.vixio.util.wrapper.Invite;
+import net.dv8tion.jda.api.entities.BaseGuildMessageChannel;
 import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.exceptions.PermissionException;
 import org.bukkit.event.Event;
@@ -37,8 +38,8 @@ public class ScopeMakeInvite extends EffectSection {
 
     @Override
     protected void execute(Event e) {
-        Invite invite = this.lastInvite == null ? new Invite() : this.lastInvite;
-        this.lastInvite = invite;
+        Invite invite = lastInvite == null ? new Invite() : lastInvite;
+        lastInvite = invite;
         runSection(e);
         Object object = this.object.getSingle(e);
         Bot bot = Util.botFrom(this.bot.getSingle(e));
@@ -54,7 +55,7 @@ public class ScopeMakeInvite extends EffectSection {
         }
         try {
             net.dv8tion.jda.api.entities.Invite invite2;
-            invite2 = boundChannel.createInvite()
+            invite2 = ((BaseGuildMessageChannel) boundChannel).createInvite()
                     .setUnique(invite.isUnique())
                     .setMaxUses(invite.getMaxUses())
                     .setMaxAge(invite.getMaxAge())

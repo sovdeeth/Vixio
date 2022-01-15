@@ -2,10 +2,9 @@ package me.iblitzkriegi.vixio.util;
 
 import ch.njol.util.Validate;
 import net.dv8tion.jda.api.entities.Message;
-
 import net.dv8tion.jda.internal.entities.DataMessage;
-import org.eclipse.jdt.annotation.NonNull;
 
+import javax.annotation.Nonnull;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +20,7 @@ public class UpdatingMessage {
     private String ID;
     private boolean paused;
 
-    private UpdatingMessage(@NonNull Message message) {
+    private UpdatingMessage(@Nonnull Message message) {
         Validate.notNull(message);
         if (message instanceof DataMessage) { // DataMessages are from built message builders and don't have IDs
             dataMessage = (DataMessage) message;
@@ -67,7 +66,7 @@ public class UpdatingMessage {
         return message == null ? null : message.get();
     }
 
-    public static UpdatingMessage from(@NonNull Message message) {
+    public static UpdatingMessage from(@Nonnull Message message) {
         Validate.notNull(message);
         // DataMessages are from built message builders and don't have IDs
         if (message instanceof DataMessage || MESSAGE_MAP.get(message.getId()) == null) {

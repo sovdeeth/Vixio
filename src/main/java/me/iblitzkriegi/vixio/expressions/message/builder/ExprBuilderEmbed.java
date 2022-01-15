@@ -64,12 +64,12 @@ public class ExprBuilderEmbed extends SimplePropertyExpression<MessageBuilder, M
         switch (mode) {
             case RESET:
             case DELETE:
-                builder.setEmbed(null);
+                builder.setEmbeds();
                 break;
             case SET:
                 MessageEmbed messageEmbed = (MessageEmbed) delta[0];
                 if (!messageEmbed.isEmpty()) {
-                    builder.setEmbed(messageEmbed);
+                    builder.setEmbeds(messageEmbed);
                 } else {
                     Vixio.getErrorHandler().warn("Vixio tried to access a empty Embed to set its title! This is not possible.");
                 }

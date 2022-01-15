@@ -2,27 +2,22 @@ package me.iblitzkriegi.vixio.commands;
 
 import me.iblitzkriegi.vixio.events.base.SimpleBukkitEvent;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
-import net.dv8tion.jda.api.entities.GuildChannel;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
 import org.bukkit.event.Cancellable;
 
 public class DiscordCommandEvent extends SimpleBukkitEvent implements Cancellable {
 
-    private DiscordCommand command;
-    private Guild guild;
-    private Message message;
-    private User user;
-    private Member member;
-    private MessageChannel messagechannel;
+    private final DiscordCommand command;
+    private final Guild guild;
+    private final Message message;
+    private final User user;
+    private final Member member;
+    private final MessageChannel messagechannel;
     private String prefix;
-    private String usedAlias;
+    private final String usedAlias;
     private boolean cancelled;
-    private GuildChannel channel;
-    private Bot bot;
+    private final GuildChannel channel;
+    private final Bot bot;
 	private String arguments;
 
 	public DiscordCommandEvent(String prefix, String usedAlias, DiscordCommand command, String arguments, Guild guild,

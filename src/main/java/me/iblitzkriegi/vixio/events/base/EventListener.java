@@ -11,8 +11,8 @@ public class EventListener<T> extends ListenerAdapter {
     // shouldn't be modified directly
     public static ArrayList<EventListener<?>> listeners = new ArrayList<>();
     public boolean enabled = true;
-    private Class<T> clazz;
-    private Consumer<T> consumer;
+    private final Class<T> clazz;
+    private final Consumer<T> consumer;
 
     public EventListener(Class<T> paramClass, Consumer<T> consumer) {
         this.clazz = paramClass;

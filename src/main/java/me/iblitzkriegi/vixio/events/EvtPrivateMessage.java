@@ -10,13 +10,13 @@ import me.iblitzkriegi.vixio.events.base.SimpleVixioEvent;
 import me.iblitzkriegi.vixio.util.UpdatingMessage;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
-import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.exceptions.RateLimitedException;
 
-public class EvtPrivateMessage extends BaseEvent<PrivateMessageReceivedEvent> {
+public class EvtPrivateMessage extends BaseEvent<MessageReceivedEvent> {
 
     static {
         BaseEvent.register("private message received", "<receive(d)?( seen)?|sent> [by %-string%]",
@@ -54,7 +54,7 @@ public class EvtPrivateMessage extends BaseEvent<PrivateMessageReceivedEvent> {
         }, 0);
     }
 
-    public class PrivateMessageEvent extends SimpleVixioEvent<PrivateMessageReceivedEvent> {
+    public class PrivateMessageEvent extends SimpleVixioEvent<MessageReceivedEvent> {
     }
 
     private boolean sent;
@@ -65,12 +65,16 @@ public class EvtPrivateMessage extends BaseEvent<PrivateMessageReceivedEvent> {
         return super.init(exprs, matchedPattern, parser);
     }
 
+    private boolean receiveOwnMessages = Vixio.getInstance().getConfig().getBoolean("receive own messages", false);
+
     @Override
-    public boolean check(PrivateMessageReceivedEvent e) {
-        if (sent && Util.botFromID(e.getAuthor().getId()) != null) { // if the mode is sent and the author is one of our bots
-            return super.check(e);
-        } else if (!sent && Util.botFromID(e.getAuthor().getId()) == null) { // if the mode is receive and the author isn't one of our bots
-            return super.check(e);
+    public boolean check(MessageReceivedEvent e) {
+        if(e.getChannelType() == ChannelType.PRIVATE) {
+            if (sent && Util.botFromID(e.getAuthor().getId()) != null) { // if the mode is sent and the author is one of our bots
+                return super.check(e);
+            } else if (!sent && (receiveOwnMessages || Util.botFromID(e.getAuthor().getId()) == null)) { // if the mode is receive and the author isn't one of our bots
+                return super.check(e);
+            }
         }
         return false;
     }

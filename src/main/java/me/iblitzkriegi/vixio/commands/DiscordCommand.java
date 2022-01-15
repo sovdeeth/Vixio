@@ -16,19 +16,19 @@ import java.util.List;
 
 public class DiscordCommand {
 
-    private String name;
-    private List<String> aliases;
-    private List<String> roles;
-    private List<ChannelType> executableIn;
-    private List<Expression<String>> prefixes;
-    private String description;
-    private String usage;
-    private String pattern;
-    private List<String> bots;
+    private final String name;
+    private final List<String> aliases;
+    private final List<String> roles;
+    private final List<ChannelType> executableIn;
+    private final List<Expression<String>> prefixes;
+    private final String description;
+    private final String usage;
+    private final String pattern;
+    private final List<String> bots;
 
-    private Trigger trigger;
+    private final Trigger trigger;
 
-    private List<DiscordArgument<?>> arguments;
+    private final List<DiscordArgument<?>> arguments;
 
     public DiscordCommand(File script, String name, String pattern, List<DiscordArgument<?>> arguments, List<Expression<String>> prefixes,
                           List<String> aliases, String description, String usage, List<String> roles,

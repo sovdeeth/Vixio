@@ -1,8 +1,6 @@
 package me.iblitzkriegi.vixio.registration;
 
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.registrations.Converters;
-import ch.njol.skript.util.Color;
 import me.iblitzkriegi.vixio.util.UpdatingMessage;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -23,23 +21,23 @@ public class TypeConverters {
         Converters.registerConverter(DiscordCommand.class, String.class, (Converter<DiscordCommand, String>) c -> c.getName());
         Converters.registerConverter(Member.class, String.class, (Converter<Member, String>) u -> u.getUser().getId());
         */
-        Converters.registerConverter(ch.njol.skript.util.Color.class, java.awt.Color.class, (Converter<Color, java.awt.Color>) color -> {
-            org.bukkit.Color bukkitColor = color.getBukkitColor();
+        Converters.registerConverter(ch.njol.skript.util.Color.class, java.awt.Color.class, color -> {
+            org.bukkit.Color bukkitColor = color.asBukkitColor();
             return new java.awt.Color(bukkitColor.getRed(), bukkitColor.getGreen(), bukkitColor.getBlue());
         });
         Converters.registerConverter(EmbedBuilder.class, MessageEmbed.class,
-                (Converter<EmbedBuilder, MessageEmbed>) e -> e.isEmpty() ? null : e.build()
+                e -> e.isEmpty() ? null : e.build()
         );
 		Converters.registerConverter(MessageBuilder.class, UpdatingMessage.class,
-				(Converter<MessageBuilder, UpdatingMessage>) builder -> {
-					UpdatingMessage m = builder.isEmpty() ? null : UpdatingMessage.from(builder.build());
-					return m;
-				});
+                builder -> {
+                    UpdatingMessage m = builder.isEmpty() ? null : UpdatingMessage.from(builder.build());
+                    return m;
+                });
         Converters.registerConverter(Member.class, User.class,
-                (Converter<Member, User>) Member::getUser);
+                Member::getUser);
 		Converters.registerConverter(EmbedBuilder.class, UpdatingMessage.class,
-				(Converter<EmbedBuilder, UpdatingMessage>) b -> b.isEmpty() ? null : UpdatingMessage.from(new MessageBuilder().setEmbed(b.build()).build()));
+                b -> b.isEmpty() ? null : UpdatingMessage.from(new MessageBuilder().setEmbeds(b.build()).build()));
         Converters.registerConverter(Bot.class, User.class,
-                (Converter<Bot, User>) Bot::getSelfUser);
+                Bot::getSelfUser);
     }
 }

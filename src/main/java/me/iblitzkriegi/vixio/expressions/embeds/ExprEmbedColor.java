@@ -9,7 +9,7 @@ import me.iblitzkriegi.vixio.Vixio;
 import net.dv8tion.jda.api.EmbedBuilder;
 import org.bukkit.event.Event;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class ExprEmbedColor extends SimplePropertyExpression<EmbedBuilder, Color> {
 
