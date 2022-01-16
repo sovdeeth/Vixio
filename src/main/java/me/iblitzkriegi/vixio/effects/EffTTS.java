@@ -31,7 +31,6 @@ public class EffTTS extends Effect implements EasyMultiple<MessageBuilder, Void>
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         builders = (Expression<MessageBuilder>) exprs[0];
         tts = parseResult.mark == 1;
-        System.out.println(tts);
         return true;
     }
 
