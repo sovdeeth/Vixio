@@ -22,7 +22,7 @@ public class ExprEmbed extends SimpleExpression<EmbedBuilder> {
                 .setExample(
                         "# outside a scope",
                         "set {_e} to a new embed",
-                        "make a new embed:",
+                        "make embed:",
                         "\tset color of embed the embed to red",
                         "\tset url of the embed to \"https://google.com\"",
                         "\tset title of the embed to \"Google!\"",
