@@ -5,11 +5,11 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
-import me.iblitzkriegi.vixio.events.EvtSlashCMDReceived;
+import me.iblitzkriegi.vixio.events.interaction.EvtButtonReceived;
+import me.iblitzkriegi.vixio.events.interaction.EvtSlashCMDReceived;
 import me.iblitzkriegi.vixio.util.skript.AsyncEffect;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.GenericInteractionCreateEvent;
 import net.dv8tion.jda.api.interactions.Interaction;
-import net.dv8tion.jda.api.interactions.InteractionType;
 import org.bukkit.event.Event;
 
 import static me.iblitzkriegi.vixio.Vixio.getInstance;
@@ -29,7 +29,12 @@ public class EffDeferInteraction extends AsyncEffect {
 
     @Override
     protected void execute(Event e) {
-        Interaction interaction = ((EvtSlashCMDReceived.SlashCMDReceived) e).getJDAEvent().getInteraction();
+        Interaction interaction = null;
+        if(e.getEventName().equals("SlashCMDReceived")) {
+            interaction = ((EvtSlashCMDReceived.SlashCMDReceived) e).getJDAEvent().getInteraction();
+        } else if(e.getEventName().equals("ButtonInteractionReceived")) {
+            interaction = ((EvtButtonReceived.ButtonInteractionReceived) e).getJDAEvent().getInteraction();
+        }
         if (interaction != null) {
             interaction.deferReply(isEphemeral).queue();
         }
@@ -43,8 +48,8 @@ public class EffDeferInteraction extends AsyncEffect {
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         isEphemeral = parseResult.mark == 1;
-        if (!ScriptLoader.isCurrentEvent(EvtSlashCMDReceived.SlashCMDReceived.class)) {
-            Skript.error("Cannot use the option expression in a non-slash command event!");
+        if (!ScriptLoader.isCurrentEvent(EvtSlashCMDReceived.SlashCMDReceived.class) && !ScriptLoader.isCurrentEvent(EvtButtonReceived.ButtonInteractionReceived.class)) {
+            Skript.error("Cannot use the option expression in a interaction event!");
             return false;
         }
         return true;

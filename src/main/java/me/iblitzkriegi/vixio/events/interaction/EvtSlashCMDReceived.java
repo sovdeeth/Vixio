@@ -1,25 +1,20 @@
-package me.iblitzkriegi.vixio.events;
+package me.iblitzkriegi.vixio.events.interaction;
 
 import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Getter;
 import me.iblitzkriegi.vixio.events.base.BaseEvent;
 import me.iblitzkriegi.vixio.events.base.SimpleVixioEvent;
-import me.iblitzkriegi.vixio.util.UpdatingMessage;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.interactions.commands.OptionMapping;
-
-import java.util.stream.Collectors;
 
 public class EvtSlashCMDReceived extends BaseEvent<SlashCommandEvent> {
     static {
         BaseEvent.register("slash command received", EvtSlashCMDReceived.class, SlashCMDReceived.class,
                 "slash command receive[d]")
                 .setName("Slash Command Received")
-                .setDesc("Fired when a slash command is received anywhere")
+                .setDesc("Fired when a slash command is executed.")
                 .setExample("on slash command received:");
 
         EventValues.registerEventValue(SlashCMDReceived.class, User.class, new Getter<User, SlashCMDReceived>() {

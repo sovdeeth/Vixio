@@ -5,7 +5,7 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
-import me.iblitzkriegi.vixio.events.EvtSlashCMDReceived;
+import me.iblitzkriegi.vixio.events.interaction.EvtSlashCMDReceived;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.skript.AsyncEffect;
 import net.dv8tion.jda.api.entities.Message;
