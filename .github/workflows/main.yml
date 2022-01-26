@@ -1,0 +1,12 @@
+name: CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: maven:3.8.4-openjdk-17
+    steps:
+      - name: Package
+        run: |
+          mvn package -DskipTests=true
