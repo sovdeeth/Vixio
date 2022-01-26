@@ -5,7 +5,6 @@ import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.localization.Language;
 import ch.njol.util.Validate;
 import ch.njol.yggdrasil.Fields;
-import me.iblitzkriegi.vixio.util.ReflectionUtils;
 
 import java.io.NotSerializableException;
 import java.io.StreamCorruptedException;
@@ -15,8 +14,7 @@ import java.util.Map;
 
 public class EnumMapper<E extends Enum<E>> {
 
-	private static final HashMap<String, String> LANG_MAP =
-			ReflectionUtils.getField(Language.class, null, "english");
+	private static final HashMap<String, String> LANG_MAP = new HashMap<>();
 
 	private final Class<E> clazz;
 	private final Map<String, E> parseMap = new HashMap<>();

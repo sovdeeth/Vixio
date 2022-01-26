@@ -5,7 +5,7 @@
 
     <groupId>me.iblitzkriegi</groupId>
     <artifactId>vixio</artifactId>
-    <version>2.0.8c-2.6</version>
+    <version>2.0.9-2.6</version>
     <packaging>jar</packaging>
 
     <name>Vixio</name>
@@ -23,6 +23,11 @@
             <name>m2-dv8tion</name>
             <url>https://m2.dv8tion.net/releases</url>
         </repository>
+<!--        <repository>-->
+<!--            <id>skript-releases</id>-->
+<!--            <name>Skript Repository</name>-->
+<!--            <url>https://repo.skriptlang.org/releases</url>-->
+<!--        </repository>-->
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
@@ -38,7 +43,7 @@
         <dependency>
             <groupId>com.github.SkriptLang</groupId>
             <artifactId>Skript</artifactId>
-            <version>2.6-beta3</version>
+            <version>2.6.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

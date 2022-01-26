@@ -296,7 +296,6 @@ public class Types {
                 return null;
             }
 
-            @Override
             public String getVariableNamePattern() {
                 return null;
             }
@@ -399,7 +398,6 @@ public class Types {
                 return null;
             }
 
-            @Override
             public String getVariableNamePattern() {
                 return null;
             }
@@ -470,7 +468,6 @@ public class Types {
                 return null;
             }
 
-            @Override
             public String getVariableNamePattern() {
                 return null;
             }
@@ -545,7 +542,6 @@ public class Types {
                 return null;
             }
 
-            @Override
             public String getVariableNamePattern() {
                 return null;
             }
