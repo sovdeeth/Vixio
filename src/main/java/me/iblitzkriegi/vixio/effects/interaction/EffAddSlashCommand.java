@@ -34,7 +34,6 @@ public class EffAddSlashCommand extends AsyncEffect {
         Guild guild = this.cmdGuild == null ? null : this.cmdGuild.getSingle(e);
         if(guild != null) {
             guild.upsertCommand(cmd).queue();
-            cmd.addOption(OptionType.BOOLEAN, "test1", "test2");
         } else {
             Bot bot = Util.botFrom(this.bot.getSingle(e));
             if (bot == null) {
