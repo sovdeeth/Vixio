@@ -3,7 +3,7 @@ name: Java CI
 on:
   push:
     paths:
-      - 'src/main/java/'
+      - 'src/main/**'
   workflow_dispatch:
 
 jobs:
