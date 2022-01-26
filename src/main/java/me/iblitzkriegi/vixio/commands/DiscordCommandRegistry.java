@@ -1,6 +1,7 @@
 package me.iblitzkriegi.vixio.commands;
 
 import ch.njol.skript.ScriptLoader;
+import ch.njol.skript.Skript;
 import ch.njol.skript.config.Config;
 import ch.njol.skript.config.Node;
 import ch.njol.skript.config.SectionNode;
@@ -8,11 +9,13 @@ import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SelfRegisteringSkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.Trigger;
+import ch.njol.skript.lang.parser.ParserInstance;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Getter;
 import ch.njol.util.Kleenean;
 import me.iblitzkriegi.vixio.Vixio;
+import me.iblitzkriegi.vixio.util.ReflectionUtils;
 import me.iblitzkriegi.vixio.util.UpdatingMessage;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
 import net.dv8tion.jda.api.entities.*;
@@ -116,22 +119,38 @@ public class DiscordCommandRegistry extends SelfRegisteringSkriptEvent {
     private String arguments;
     private String command;
 
+    private void setHasDelayBefore(Kleenean hasDelayBefore) {
+        if(Skript.getVersion().getMajor() == 6) {
+            ParserInstance.get().setHasDelayBefore(hasDelayBefore);
+        } else {
+            ReflectionUtils.setField(ScriptLoader.class, null, "hasDelayBefore", hasDelayBefore);
+        }
+    }
+
+    private Kleenean getHasDelayBefore() {
+        if(Skript.getVersion().getMajor() == 6) {
+            return ParserInstance.get().getHasDelayBefore();
+        } else {
+            return ReflectionUtils.getField(ScriptLoader.class, null, "hasDelayBefore");
+        }
+    }
+
     @Override
     public boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
         command = parser.regexes.get(0).group(1);
         arguments = parser.regexes.get(0).group(2);
         SectionNode sectionNode = (SectionNode) SkriptLogger.getNode();
 
-        String originalName = ScriptLoader.getCurrentEventName();
-        Class<? extends Event>[] originalEvents = ScriptLoader.getCurrentEvents();
-        Kleenean originalDelay = ScriptLoader.getHasDelayBefore();
-        ScriptLoader.setCurrentEvent("discord command", DiscordCommandEvent.class);
+        String originalName = ParserInstance.get().getCurrentEventName();
+        Class<? extends Event>[] originalEvents = ParserInstance.get().getCurrentEvents();
+        Kleenean originalDelay = getHasDelayBefore();
+        ParserInstance.get().setCurrentEvent("discord command", DiscordCommandEvent.class);
 
         DiscordCommand cmd = DiscordCommandFactory.getInstance().add(sectionNode);
         command = cmd == null ? command : cmd.getName();
 
-        ScriptLoader.setCurrentEvent(originalName, originalEvents);
-        ScriptLoader.setHasDelayBefore(originalDelay);
+        ParserInstance.get().setCurrentEvent(originalName, originalEvents);
+        setHasDelayBefore(originalDelay);
         nukeSectionNode(sectionNode);
 
         return cmd != null;

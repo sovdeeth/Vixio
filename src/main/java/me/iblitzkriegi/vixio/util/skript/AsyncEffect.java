@@ -9,6 +9,7 @@ import ch.njol.skript.lang.Trigger;
 import ch.njol.skript.lang.TriggerItem;
 import ch.njol.skript.timings.SkriptTimings;
 import ch.njol.skript.variables.Variables;
+import me.iblitzkriegi.vixio.Vixio;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
@@ -33,8 +34,11 @@ public abstract class AsyncEffect extends Effect {
     protected TriggerItem walk(Event e) {
         debug(e, true);
 
+        boolean MANAGE_VARIABLES = Skript.getVersion().getMinor() > 2;
         Delay.addDelayedEvent(e); // Mark this event as delayed
-        Object localVars = Variables.removeLocals(e); // Back up local variables
+        Object _localVars = null;
+        if (MANAGE_VARIABLES) _localVars = Variables.removeLocals(e); // Back up local variables
+        Object localVars = _localVars;
 
         if (!Skript.getInstance().isEnabled()) // See https://github.com/SkriptLang/Skript/issues/3702
             return null;
@@ -61,11 +65,11 @@ public abstract class AsyncEffect extends Effect {
 
                     TriggerItem.walk(getNext(), e);
 
-                    Variables.removeLocals(e); // Clean up local vars, we may be exiting now
+                    if (MANAGE_VARIABLES) Variables.removeLocals(e); // Clean up local vars, we may be exiting now
 
                     SkriptTimings.stop(timing); // Stop timing if it was even started
                 });
-            } else {
+            } else if (MANAGE_VARIABLES) {
                 Variables.removeLocals(e);
             }
         });
