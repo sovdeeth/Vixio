@@ -6,6 +6,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
 import me.iblitzkriegi.vixio.events.interaction.EvtButtonReceived;
+import me.iblitzkriegi.vixio.events.interaction.EvtSelectReceived;
 import me.iblitzkriegi.vixio.events.interaction.EvtSlashCMDReceived;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.skript.AsyncEffect;
@@ -17,12 +18,12 @@ import static me.iblitzkriegi.vixio.Vixio.getInstance;
 
 public class EffFollowUpInteraction extends AsyncEffect {
     static {
-        getInstance().registerEffect(EffFollowUpInteraction.class, "send interaction message (1¦silently|2¦normally) (and say|with) %string%")
+        getInstance().registerEffect(EffFollowUpInteraction.class, "say interaction message (1¦silently|2¦normally) (and say|with) %string%")
                 .setName("Interaction Follow Up Response")
                 .setDesc("Send a follow up response to an interaction.")
                 .setExample(
                         "on slash command received:",
-                        "\tsend interaction message normally with \"test\""
+                        "\tsay interaction message normally with \"test\""
                 );
     }
 
@@ -36,6 +37,8 @@ public class EffFollowUpInteraction extends AsyncEffect {
             interaction = ((EvtSlashCMDReceived.SlashCMDReceived) e).getJDAEvent().getInteraction();
         } else if(e.getEventName().equals("ButtonInteractionReceived")) {
             interaction = ((EvtButtonReceived.ButtonInteractionReceived) e).getJDAEvent().getInteraction();
+        } else if(e.getEventName().equals("SelectInteractionReceived")) {
+            interaction = ((EvtSelectReceived.SelectInteractionReceived) e).getJDAEvent().getInteraction();
         }
         if (interaction != null) {
             Message content = Util.messageFrom(this.content.getSingle(e));
@@ -46,7 +49,7 @@ public class EffFollowUpInteraction extends AsyncEffect {
 
     @Override
     public String toString(Event e, boolean debug) {
-        return "respond to the interaction";
+        return "say interaction message";
     }
 
     @Override
@@ -54,8 +57,8 @@ public class EffFollowUpInteraction extends AsyncEffect {
         content = (Expression<String>) exprs[0];
         isEphemeral = parseResult.mark == 1;
         //noinspection deprecation
-        if (!ScriptLoader.isCurrentEvent(EvtSlashCMDReceived.SlashCMDReceived.class) && !ScriptLoader.isCurrentEvent(EvtButtonReceived.ButtonInteractionReceived.class)) {
-            Skript.error("Cannot use the option expression in a non-slash command event!");
+        if (!ScriptLoader.isCurrentEvent(EvtSlashCMDReceived.SlashCMDReceived.class) && !ScriptLoader.isCurrentEvent(EvtButtonReceived.ButtonInteractionReceived.class) && !ScriptLoader.isCurrentEvent(EvtSelectReceived.SelectInteractionReceived.class)) {
+            Skript.error("Cannot use the option expression in a non-interaction command event!");
             return false;
         }
         return true;

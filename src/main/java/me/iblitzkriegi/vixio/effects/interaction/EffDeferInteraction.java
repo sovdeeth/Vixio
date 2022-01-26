@@ -6,6 +6,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
 import me.iblitzkriegi.vixio.events.interaction.EvtButtonReceived;
+import me.iblitzkriegi.vixio.events.interaction.EvtSelectReceived;
 import me.iblitzkriegi.vixio.events.interaction.EvtSlashCMDReceived;
 import me.iblitzkriegi.vixio.util.skript.AsyncEffect;
 import net.dv8tion.jda.api.events.interaction.GenericInteractionCreateEvent;
@@ -34,8 +35,10 @@ public class EffDeferInteraction extends AsyncEffect {
             interaction = ((EvtSlashCMDReceived.SlashCMDReceived) e).getJDAEvent().getInteraction();
         } else if(e.getEventName().equals("ButtonInteractionReceived")) {
             interaction = ((EvtButtonReceived.ButtonInteractionReceived) e).getJDAEvent().getInteraction();
+        } else if(e.getEventName().equals("SelectInteractionReceived")) {
+            interaction = ((EvtSelectReceived.SelectInteractionReceived) e).getJDAEvent().getInteraction();
         }
-        if (interaction != null) {
+        if (interaction != null && !interaction.isAcknowledged()) {
             interaction.deferReply(isEphemeral).queue();
         }
     }
@@ -49,7 +52,7 @@ public class EffDeferInteraction extends AsyncEffect {
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         isEphemeral = parseResult.mark == 1;
         //noinspection deprecation
-        if (!ScriptLoader.isCurrentEvent(EvtSlashCMDReceived.SlashCMDReceived.class) && !ScriptLoader.isCurrentEvent(EvtButtonReceived.ButtonInteractionReceived.class)) {
+        if (!ScriptLoader.isCurrentEvent(EvtSlashCMDReceived.SlashCMDReceived.class) && !ScriptLoader.isCurrentEvent(EvtButtonReceived.ButtonInteractionReceived.class) && !ScriptLoader.isCurrentEvent(EvtSelectReceived.SelectInteractionReceived.class)) {
             Skript.error("Cannot use the option expression in a non-interaction event!");
             return false;
         }

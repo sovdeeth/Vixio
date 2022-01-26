@@ -45,7 +45,7 @@ public class EffAckInteraction extends AsyncEffect {
         } else if(e.getEventName().equals("SelectInteractionReceived")) {
             interaction = ((EvtSelectReceived.SelectInteractionReceived) e).getJDAEvent().getInteraction();
         }
-        if (interaction != null) {
+        if (interaction != null && !interaction.isAcknowledged()) {
             ((ComponentInteraction) interaction).deferEdit().queue();
         }
     }
