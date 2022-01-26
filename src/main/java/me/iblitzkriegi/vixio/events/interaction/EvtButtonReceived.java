@@ -2,10 +2,12 @@ package me.iblitzkriegi.vixio.events.interaction;
 
 import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Getter;
+import me.iblitzkriegi.vixio.events.EvtReactionRemove;
 import me.iblitzkriegi.vixio.events.base.BaseEvent;
 import me.iblitzkriegi.vixio.events.base.SimpleVixioEvent;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
+import me.iblitzkriegi.vixio.util.wrapper.Emote;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
@@ -14,7 +16,7 @@ public class EvtButtonReceived extends BaseEvent<ButtonClickEvent> {
     static {
         BaseEvent.register("button interaction received", EvtButtonReceived.class, ButtonInteractionReceived.class,
                 "button interaction receive[d]")
-                .setName("Slash Command Received")
+                .setName("Button Interaction Received")
                 .setDesc("Fired when a button is clicked.")
                 .setExample("on button interaction received:");
 
@@ -49,7 +51,16 @@ public class EvtButtonReceived extends BaseEvent<ButtonClickEvent> {
         EventValues.registerEventValue(ButtonInteractionReceived.class, String.class, new Getter<String, ButtonInteractionReceived>() {
             @Override
             public String get(ButtonInteractionReceived event) {
-                return event.getJDAEvent().getButton().getLabel();
+                return event.getJDAEvent().getButton().getId();
+            }
+        }, 0);
+
+        EventValues.registerEventValue(ButtonInteractionReceived.class, Emote.class, new Getter<Emote, ButtonInteractionReceived>() {
+            @Override
+            public Emote get(ButtonInteractionReceived event) {
+                Emoji emoji = event.getJDAEvent().getButton().getEmoji();
+                if(emoji == null) return null;
+                return Util.unicodeFrom(emoji.getName(), event.getJDAEvent().getGuild());
             }
         }, 0);
 

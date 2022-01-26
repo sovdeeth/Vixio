@@ -12,7 +12,7 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 public class EvtSlashCMDReceived extends BaseEvent<SlashCommandEvent> {
     static {
         BaseEvent.register("slash command received", EvtSlashCMDReceived.class, SlashCMDReceived.class,
-                "slash command receive[d]")
+                "slash command [interaction] receive[d]")
                 .setName("Slash Command Received")
                 .setDesc("Fired when a slash command is executed.")
                 .setExample("on slash command received:");

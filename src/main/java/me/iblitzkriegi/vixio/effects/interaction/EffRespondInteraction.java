@@ -5,6 +5,7 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
+import me.iblitzkriegi.vixio.events.interaction.EvtButtonReceived;
 import me.iblitzkriegi.vixio.events.interaction.EvtSlashCMDReceived;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.skript.AsyncEffect;
@@ -30,9 +31,15 @@ public class EffRespondInteraction extends AsyncEffect {
 
     @Override
     protected void execute(Event e) {
-        Interaction interaction = ((EvtSlashCMDReceived.SlashCMDReceived) e).getJDAEvent().getInteraction();
+        Interaction interaction = null;
+        if(e.getEventName().equals("SlashCMDReceived")) {
+            interaction = ((EvtSlashCMDReceived.SlashCMDReceived) e).getJDAEvent().getInteraction();
+        } else if(e.getEventName().equals("ButtonInteractionReceived")) {
+            interaction = ((EvtButtonReceived.ButtonInteractionReceived) e).getJDAEvent().getInteraction();
+        }
         if (interaction != null) {
             Message content = Util.messageFrom(this.content.getSingle(e));
+            assert content != null;
             if(interaction.isAcknowledged()) {
                 interaction.getHook().editOriginal(content).queue();
             } else {
@@ -43,15 +50,16 @@ public class EffRespondInteraction extends AsyncEffect {
 
     @Override
     public String toString(Event e, boolean debug) {
-        return "respond to the interaction";
+        return "respond to the interaction event";
     }
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         content = (Expression<String>) exprs[0];
         isEphemeral = parseResult.mark == 1;
-        if (!ScriptLoader.isCurrentEvent(EvtSlashCMDReceived.SlashCMDReceived.class)) {
-            Skript.error("Cannot use the option expression in a non-slash command event!");
+        //noinspection deprecation
+        if (!ScriptLoader.isCurrentEvent(EvtSlashCMDReceived.SlashCMDReceived.class) && !ScriptLoader.isCurrentEvent(EvtButtonReceived.ButtonInteractionReceived.class)) {
+            Skript.error("Cannot use the option expression in a non-interaction event!");
             return false;
         }
         return true;

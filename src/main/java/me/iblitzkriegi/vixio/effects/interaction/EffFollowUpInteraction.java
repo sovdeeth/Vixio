@@ -7,25 +7,27 @@ import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
 import me.iblitzkriegi.vixio.events.interaction.EvtButtonReceived;
 import me.iblitzkriegi.vixio.events.interaction.EvtSlashCMDReceived;
+import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.skript.AsyncEffect;
-import net.dv8tion.jda.api.events.interaction.GenericInteractionCreateEvent;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.interactions.Interaction;
 import org.bukkit.event.Event;
 
 import static me.iblitzkriegi.vixio.Vixio.getInstance;
 
-public class EffDeferInteraction extends AsyncEffect {
+public class EffFollowUpInteraction extends AsyncEffect {
     static {
-        getInstance().registerEffect(EffDeferInteraction.class, "defer [the] interaction [event] (1¦silently|2¦normally)")
-                .setName("Defer Interaction")
-                .setDesc("Defer an interaction.")
+        getInstance().registerEffect(EffFollowUpInteraction.class, "send interaction message (1¦silently|2¦normally) (and say|with) %string%")
+                .setName("Interaction Follow Up Response")
+                .setDesc("Send a follow up response to an interaction.")
                 .setExample(
                         "on slash command received:",
-                        "\tdefer interaction"
+                        "\tsend interaction message normally with \"test\""
                 );
     }
 
     private boolean isEphemeral;
+    private Expression<String> content;
 
     @Override
     protected void execute(Event e) {
@@ -36,21 +38,24 @@ public class EffDeferInteraction extends AsyncEffect {
             interaction = ((EvtButtonReceived.ButtonInteractionReceived) e).getJDAEvent().getInteraction();
         }
         if (interaction != null) {
-            interaction.deferReply(isEphemeral).queue();
+            Message content = Util.messageFrom(this.content.getSingle(e));
+            assert content != null;
+            interaction.getHook().sendMessage(content).setEphemeral(isEphemeral).queue();
         }
     }
 
     @Override
     public String toString(Event e, boolean debug) {
-        return "defer the interaction event";
+        return "respond to the interaction";
     }
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
+        content = (Expression<String>) exprs[0];
         isEphemeral = parseResult.mark == 1;
         //noinspection deprecation
         if (!ScriptLoader.isCurrentEvent(EvtSlashCMDReceived.SlashCMDReceived.class) && !ScriptLoader.isCurrentEvent(EvtButtonReceived.ButtonInteractionReceived.class)) {
-            Skript.error("Cannot use the option expression in a non-interaction event!");
+            Skript.error("Cannot use the option expression in a non-slash command event!");
             return false;
         }
         return true;

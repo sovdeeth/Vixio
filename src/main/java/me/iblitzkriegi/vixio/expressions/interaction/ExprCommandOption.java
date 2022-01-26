@@ -16,9 +16,6 @@ import org.jetbrains.annotations.Nullable;
 import static me.iblitzkriegi.vixio.Vixio.getInstance;
 
 public class ExprCommandOption extends SimpleExpression<Object> {
-
-    public static Object commandCore;
-
     static {
         getInstance().registerExpression(ExprCommandOption.class, Object.class, ExpressionType.SIMPLE, "[the] [slash] [command] option [with id] %string%")
             .setName("Slash Command Option")
