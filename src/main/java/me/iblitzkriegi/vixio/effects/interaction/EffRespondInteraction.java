@@ -18,7 +18,7 @@ import static me.iblitzkriegi.vixio.Vixio.getInstance;
 
 public class EffRespondInteraction extends AsyncEffect {
     static {
-        getInstance().registerEffect(EffRespondInteraction.class, "respond to [the] interaction [event] (1¦silently|2¦normally) (and say|with) %string%")
+        getInstance().registerEffect(EffRespondInteraction.class, "respond to [the] interaction [event] (1¦silently|2¦normally) (and say|with) %messages/strings%")
                 .setName("Respond to Interaction")
                 .setDesc("Respond to an interaction.")
                 .setExample(
@@ -28,7 +28,7 @@ public class EffRespondInteraction extends AsyncEffect {
     }
 
     private boolean isEphemeral;
-    private Expression<String> content;
+    private Expression<Object> message;
 
     @Override
     protected void execute(Event e) {
@@ -41,12 +41,12 @@ public class EffRespondInteraction extends AsyncEffect {
             interaction = ((EvtSelectReceived.SelectInteractionReceived) e).getJDAEvent().getInteraction();
         }
         if (interaction != null) {
-            Message content = Util.messageFrom(this.content.getSingle(e));
-            assert content != null;
+            Message message = Util.messageFrom(this.message.getSingle(e));
+            assert message != null;
             if(interaction.isAcknowledged()) {
-                interaction.getHook().editOriginal(content).queue();
+                interaction.getHook().editOriginal(message).queue();
             } else {
-                interaction.reply(content).setEphemeral(isEphemeral).queue();
+                interaction.reply(message).setEphemeral(isEphemeral).queue();
             }
         }
     }
@@ -58,7 +58,7 @@ public class EffRespondInteraction extends AsyncEffect {
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
-        content = (Expression<String>) exprs[0];
+        message = (Expression<Object>) exprs[0];
         isEphemeral = parseResult.mark == 1;
         //noinspection deprecation
         if (!ScriptLoader.isCurrentEvent(EvtSlashCMDReceived.SlashCMDReceived.class) && !ScriptLoader.isCurrentEvent(EvtButtonReceived.ButtonInteractionReceived.class) && !ScriptLoader.isCurrentEvent(EvtSelectReceived.SelectInteractionReceived.class)) {
