@@ -128,7 +128,7 @@ public class DiscordCommandRegistry extends SelfRegisteringSkriptEvent {
     }
 
     private Kleenean getHasDelayBefore() {
-        if(Skript.getVersion().getMajor() == 6) {
+        if (Skript.getVersion().getMajor() == 6) {
             return ParserInstance.get().getHasDelayBefore();
         } else {
             return ReflectionUtils.getField(ScriptLoader.class, null, "hasDelayBefore");
@@ -141,15 +141,15 @@ public class DiscordCommandRegistry extends SelfRegisteringSkriptEvent {
         arguments = parser.regexes.get(0).group(2);
         SectionNode sectionNode = (SectionNode) SkriptLogger.getNode();
 
-        String originalName = ParserInstance.get().getCurrentEventName();
-        Class<? extends Event>[] originalEvents = ParserInstance.get().getCurrentEvents();
+        String originalName = ScriptLoader.getCurrentEventName();
+        Class<? extends Event>[] originalEvents = ScriptLoader.getCurrentEvents();
         Kleenean originalDelay = getHasDelayBefore();
-        ParserInstance.get().setCurrentEvent("discord command", DiscordCommandEvent.class);
+        ScriptLoader.setCurrentEvent("discord command", DiscordCommandEvent.class);
 
         DiscordCommand cmd = DiscordCommandFactory.getInstance().add(sectionNode);
         command = cmd == null ? command : cmd.getName();
 
-        ParserInstance.get().setCurrentEvent(originalName, originalEvents);
+        ScriptLoader.setCurrentEvent(originalName, originalEvents);
         setHasDelayBefore(originalDelay);
         nukeSectionNode(sectionNode);
 
