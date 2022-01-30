@@ -5,6 +5,7 @@ version: ${project.version}
 author: iBlitzkriegi, sky_high (Pikachu), 1A3Dev
 website: http://vixio.space
 depend: [Skript]
+api-version: 1.13
 commands:
   vixio:
     description: Default command for Vixio
