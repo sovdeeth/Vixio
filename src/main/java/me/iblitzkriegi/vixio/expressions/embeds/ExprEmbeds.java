@@ -14,10 +14,10 @@ public class ExprEmbeds extends PropertyExpression<UpdatingMessage, EmbedBuilder
 
     static {
         Vixio.getInstance().registerPropertyExpression(ExprEmbeds.class, EmbedBuilder.class,
-                "embed", "messages")
+                "embeds", "messages")
                 .setName("Embed of Message")
                 .setDesc("Get the Embed of a Message")
-                .setExample("broadcast \"%embed of event-message%\"");
+                .setExample("broadcast \"%embeds of event-message%\"");
 
     }
 
