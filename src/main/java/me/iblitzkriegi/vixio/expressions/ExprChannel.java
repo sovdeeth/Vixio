@@ -19,7 +19,7 @@ public class ExprChannel extends SimpleExpression<GuildChannel> {
                 .setName("New and Previous Channel")
                 .setDesc("Get the new channel or previous channel for the member channel switch event.")
                 .setExample(
-                        "on member switch voice channel:\n",
+                        "on member switch voice channel:",
                         "\tbroadcast \"%event-user% left %old channel% and joined %new channel%\""
                 );
     }

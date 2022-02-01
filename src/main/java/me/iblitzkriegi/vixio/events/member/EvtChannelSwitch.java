@@ -20,7 +20,7 @@ public class EvtChannelSwitch extends BaseEvent<GuildVoiceMoveEvent> {
                 .setName("Member Switch Voice Channel")
                 .setDesc("Fired when a member switches voice channels.")
                 .setExample(
-                        "on member switch voice channel:\n",
+                        "on member switch voice channel:",
                         "\tbroadcast \"%event-user% left %old channel% and joined %new channel%\""
                 );
 
