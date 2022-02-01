@@ -70,7 +70,7 @@ public class EvtPrivateMessage extends BaseEvent<MessageReceivedEvent> {
         if(e.getChannelType() == ChannelType.PRIVATE) {
             if (sent && Util.botFromID(e.getAuthor().getId()) != null) { // if the mode is sent and the author is one of our bots
                 return super.check(e);
-            } else if (!sent && (Vixio.receiveOwnMessages || Util.botFromID(e.getAuthor().getId()) == null)) { // if the mode is receive and the author isn't one of our bots
+            } else if (!sent && Util.botFromID(e.getAuthor().getId()) == null) { // if the mode is receive and the author isn't one of our bots
                 return super.check(e);
             }
         }

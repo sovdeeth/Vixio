@@ -16,11 +16,11 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class EvtGuildMessageReceive extends BaseEvent<MessageReceivedEvent> {
 
     static {
-        BaseEvent.register("guild message received", "(1¦receive[d] [seen]|2¦ sent) [by %-string%]",
+        BaseEvent.register("guild message received", "(1¦receive[d] [seen]|2¦sent) [by %-string%]",
                 EvtGuildMessageReceive.class, GuildMessageReceiveEvent.class, "(guild|server) message")
                 .setName("Guild Message Received")
                 .setDesc("Fired when a message is sent in a text channel that the bot can read.")
-                .setUserFacing("(guild|server) message (receive[d] [seen]| sent) [by %-string%]")
+                .setUserFacing("(guild|server) message (receive[d] [seen]|sent) [by %-string%]")
                 .setExample("on guild message received seen by \"a bot\":");
         EventValues.registerEventValue(GuildMessageReceiveEvent.class, GuildChannel.class, new Getter<GuildChannel, GuildMessageReceiveEvent>() {
             @Override
@@ -86,7 +86,7 @@ public class EvtGuildMessageReceive extends BaseEvent<MessageReceivedEvent> {
         if(e.isFromGuild()) {
             if (sent && Util.botFromID(e.getAuthor().getId()) != null) { // if the mode is sent and the author is one of our bots
                 return super.check(e);
-            } else if (!sent && (Vixio.receiveOwnMessages || Util.botFromID(e.getAuthor().getId()) == null)) { // if the mode is receive and the author isn't one of our bots
+            } else if (!sent && Util.botFromID(e.getAuthor().getId()) == null) { // if the mode is receive and the author isn't one of our bots
                 return super.check(e);
             }
         }
