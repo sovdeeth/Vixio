@@ -3,10 +3,7 @@ package me.iblitzkriegi.vixio.commands;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.localization.Language;
 import me.iblitzkriegi.vixio.util.Util;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.bukkit.Bukkit;
@@ -31,10 +28,10 @@ public class CommandListener extends ListenerAdapter {
 
                 for (String alias : command.getUsableAliases()) {
                     Message message = e.getMessage();
-                    TextChannel textChannel = null;
+                    GuildChannel textChannel = null;
                     Guild guild = null;
                     if (message.isFromGuild()) {
-                        textChannel = e.getTextChannel();
+                        textChannel = e.getGuildChannel();
                         guild = e.getGuild();
                     }
                     DiscordCommandEvent event = new DiscordCommandEvent(null, alias, command, null,

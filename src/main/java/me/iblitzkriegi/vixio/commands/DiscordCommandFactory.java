@@ -98,10 +98,13 @@ public class DiscordCommandFactory {
     }
 
     public ArrayList<ChannelType> parsePlaces(String[] places) {
-        ArrayList<ChannelType> types = new ArrayList<ChannelType>();
+        ArrayList<ChannelType> types = new ArrayList<>();
         for (String place : places) {
             if (Util.equalsAnyIgnoreCase(place, "server", "guild")) {
                 types.add(ChannelType.TEXT);
+                types.add(ChannelType.NEWS);
+                types.add(ChannelType.GUILD_PUBLIC_THREAD);
+                types.add(ChannelType.GUILD_PRIVATE_THREAD);
             } else if (Util.equalsAnyIgnoreCase(place, "dm", "pm", "direct message", "private message")) {
                 types.add(ChannelType.PRIVATE);
             } else {
@@ -271,7 +274,6 @@ public class DiscordCommandFactory {
         }
 
         this.commandMap.put(new Signature(command, discordCommand), discordCommand);
-        currentArguments = null;
         return discordCommand;
 
     }
