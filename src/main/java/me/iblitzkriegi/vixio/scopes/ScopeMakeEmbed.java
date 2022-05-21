@@ -110,7 +110,7 @@ public class ScopeMakeEmbed extends EffectSection {
 
     @Override
     public String toString(Event e, boolean debug) {
-        return "make embed " + builder.toString(e, debug);
+        return "make embed " + (builder != null ? builder.toString(e, debug) : "");
     }
 
     @Override
