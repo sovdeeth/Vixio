@@ -10,7 +10,7 @@ import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.skript.AsyncEffect;
 import me.iblitzkriegi.vixio.util.skript.SkriptUtil;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
-import net.dv8tion.jda.api.entities.BaseGuildMessageChannel;
+import net.dv8tion.jda.api.entities.StandardGuildMessageChannel;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.GuildChannel;
@@ -57,9 +57,9 @@ public class EffCloneChannel extends AsyncEffect {
         }
         try {
             if (varExpr == null) {
-                ((BaseGuildMessageChannel) boundChannel).createCopy(boundGuild).setName(name).queue();
+                ((StandardGuildMessageChannel) boundChannel).createCopy(boundGuild).setName(name).queue();
             } else {
-                GuildChannel copiedChannel = ((BaseGuildMessageChannel) boundChannel).createCopy(boundGuild).setName(name).complete();
+                GuildChannel copiedChannel = ((StandardGuildMessageChannel) boundChannel).createCopy(boundGuild).setName(name).complete();
                 Util.storeInVar(varName, varExpr, copiedChannel, e);
             }
         } catch (PermissionException x) {

@@ -32,7 +32,7 @@ public class ExprMentionedUsers extends SimpleExpression<User> implements EasyMu
     protected User[] get(Event e) {
         return convert(getReturnType(), messages.getAll(e), msg -> {
             Message message = UpdatingMessage.convert(msg);
-            List<User> users = message.getMentionedUsers();
+            List<User> users = message.getMentions().getUsers();
             return users.toArray(new User[users.size()]);
         });
     }

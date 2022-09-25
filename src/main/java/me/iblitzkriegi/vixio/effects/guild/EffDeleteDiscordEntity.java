@@ -66,7 +66,7 @@ public class EffDeleteDiscordEntity extends Effect {
                 } else if (object instanceof Emote) {
                     type = "emote";
                     Emote emote = (Emote) object;
-                    emote.getGuild().getEmoteById(emote.getID()).delete();
+                    emote.getGuild().getEmojiById(emote.getID()).delete();
                 }
             }
         } catch (PermissionException x) {

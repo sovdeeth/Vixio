@@ -7,7 +7,7 @@ import ch.njol.util.Kleenean;
 import me.iblitzkriegi.vixio.Vixio;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
-import net.dv8tion.jda.api.entities.BaseGuildMessageChannel;
+import net.dv8tion.jda.api.entities.StandardGuildMessageChannel;
 import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.TextChannel;
 import org.bukkit.event.Event;
@@ -45,7 +45,7 @@ public class EffNsfw extends Effect {
             if (channel instanceof TextChannel) {
                 channel = Util.bindChannel(bot, (TextChannel) channel);
                 if (channel != null) {
-                    ((BaseGuildMessageChannel) channel).getManager().setNSFW(newState).queue();
+                    ((StandardGuildMessageChannel) channel).getManager().setNSFW(newState).queue();
                 }
             }
         }

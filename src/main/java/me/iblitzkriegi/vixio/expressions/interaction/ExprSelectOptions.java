@@ -9,9 +9,6 @@ import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import me.iblitzkriegi.vixio.Vixio;
 import me.iblitzkriegi.vixio.events.interaction.EvtSelectReceived;
-import me.iblitzkriegi.vixio.events.member.EvtAddRole;
-import me.iblitzkriegi.vixio.events.member.EvtRemoveRole;
-import net.dv8tion.jda.api.entities.Role;
 import org.bukkit.event.Event;
 
 import java.util.List;

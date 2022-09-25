@@ -7,6 +7,7 @@ import ch.njol.util.Kleenean;
 import me.iblitzkriegi.vixio.Vixio;
 import me.iblitzkriegi.vixio.util.UpdatingMessage;
 import me.iblitzkriegi.vixio.util.skript.EasyMultiple;
+import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import org.bukkit.event.Event;
@@ -32,7 +33,7 @@ public class ExprMentionedChannels extends SimpleExpression<TextChannel> impleme
     protected TextChannel[] get(Event e) {
         return convert(getReturnType(), messages.getAll(e), msg -> {
             Message message = UpdatingMessage.convert(msg);
-            List<TextChannel> textChannels = message.getMentionedChannels();
+            List<TextChannel> textChannels = (List<TextChannel>) message.getMentions().getChannels().stream().filter((c) -> c.getType() == ChannelType.TEXT);
             return textChannels.toArray(new TextChannel[textChannels.size()]);
         });
     }

@@ -68,14 +68,14 @@ public class EvtAddReaction extends BaseEvent<MessageReactionAddEvent> {
         EventValues.registerEventValue(ReactionAddEvent.class, GuildChannel.class, new Getter<GuildChannel, ReactionAddEvent>() {
             @Override
             public GuildChannel get(ReactionAddEvent event) {
-                return event.getJDAEvent().getTextChannel();
+                return event.getJDAEvent().getGuildChannel();
             }
         }, 0);
 
         EventValues.registerEventValue(ReactionAddEvent.class, Emote.class, new Getter<Emote, ReactionAddEvent>() {
             @Override
             public Emote get(ReactionAddEvent event) {
-                MessageReaction.ReactionEmote reactionEmote = event.getJDAEvent().getReactionEmote();
+                Emote reactionEmote = (Emote) event.getJDAEvent().getEmoji();
                 if (!reactionEmote.isEmote()) {
                     return Util.unicodeFrom(reactionEmote.getName());
                 } else {

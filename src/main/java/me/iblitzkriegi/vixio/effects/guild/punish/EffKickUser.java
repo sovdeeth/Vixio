@@ -9,6 +9,7 @@ import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.UserSnowflake;
 import net.dv8tion.jda.api.exceptions.PermissionException;
 import org.bukkit.event.Event;
 
@@ -44,7 +45,7 @@ public class EffKickUser extends Effect {
         for (Object object : users) {
             String user = object instanceof User ? ((User) object).getId() : (String) object;
             try {
-                boundGuild.kick(user, kickReason).queue();
+                boundGuild.kick(UserSnowflake.fromId(user), kickReason).queue();
             } catch (PermissionException x) {
                 Vixio.getErrorHandler().needsPerm(bot, "kick user", x.getPermission().getName());
             } catch (IllegalArgumentException x) {

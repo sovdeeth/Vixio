@@ -7,9 +7,10 @@ import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.skript.AsyncEffect;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.utils.data.DataObject;
 import org.bukkit.event.Event;
+import org.json.JSONObject;
 
 import java.util.Objects;
 
@@ -30,7 +31,8 @@ public class EffAddSlashCommand extends AsyncEffect {
 
     @Override
     protected void execute(Event e) {
-        CommandData cmd = new CommandData(Objects.requireNonNull(this.cmdName.getSingle(e)), Objects.requireNonNull(this.cmdDesc.getSingle(e)));
+        DataObject cmdData = DataObject.fromJson(String.valueOf(new JSONObject().put("name", Objects.requireNonNull(this.cmdName.getSingle(e))).put("description", Objects.requireNonNull(this.cmdDesc.getSingle(e)))));
+        CommandData cmd = CommandData.fromData(cmdData);
         Guild guild = this.cmdGuild == null ? null : this.cmdGuild.getSingle(e);
         if(guild != null) {
             guild.upsertCommand(cmd).queue();

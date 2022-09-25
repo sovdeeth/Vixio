@@ -43,12 +43,13 @@ public class ExprEmotes extends SimpleExpression<Emote> {
     protected Emote[] get(Event e) {
         Guild guild = this.guild.getSingle(e);
         ArrayList<Emote> emotes = new ArrayList<>();
+        assert guild != null;
         if (global) {
-            for (net.dv8tion.jda.api.entities.Emote emote : guild.getEmotes()) {
+            for (net.dv8tion.jda.api.entities.emoji.RichCustomEmoji emote : guild.getEmojis()) {
                 emotes.add(new Emote(emote));
             }
         } else {
-            for (net.dv8tion.jda.api.entities.Emote emote : guild.getEmotes()) {
+            for (net.dv8tion.jda.api.entities.emoji.RichCustomEmoji emote : guild.getEmojis()) {
                 if (emote.isManaged()) {
                     emotes.add(new Emote(emote));
                 }

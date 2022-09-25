@@ -32,7 +32,7 @@ public class ExprMentionedRoles extends SimpleExpression<Role> implements EasyMu
     protected Role[] get(Event e) {
         return convert(getReturnType(), messages.getAll(e), msg -> {
             Message message = UpdatingMessage.convert(msg);
-            List<Role> roles = message.getMentionedRoles();
+            List<Role> roles = message.getMentions().getRoles();
             return roles.toArray(new Role[roles.size()]);
         });
     }

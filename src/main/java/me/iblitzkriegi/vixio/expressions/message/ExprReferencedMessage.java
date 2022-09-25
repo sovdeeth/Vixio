@@ -5,8 +5,6 @@ import me.iblitzkriegi.vixio.Vixio;
 import me.iblitzkriegi.vixio.util.UpdatingMessage;
 import net.dv8tion.jda.api.entities.Message;
 
-import java.util.Objects;
-
 public class ExprReferencedMessage extends SimplePropertyExpression<UpdatingMessage, UpdatingMessage> {
     static {
         Vixio.getInstance().registerPropertyExpression(ExprReferencedMessage.class, UpdatingMessage.class, "message reference", "message")

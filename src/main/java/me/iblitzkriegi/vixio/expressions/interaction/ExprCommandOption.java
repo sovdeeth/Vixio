@@ -46,7 +46,7 @@ public class ExprCommandOption extends SimpleExpression<Object> {
             if (option == null) return new Object[0];
             switch (option.getType()) {
                 case CHANNEL:
-                    return new Channel[] {option.getAsMessageChannel()};
+                    return new Channel[] {option.getAsChannel()};
                 case USER:
                     return new User[] {option.getAsUser()};
                 case ROLE:

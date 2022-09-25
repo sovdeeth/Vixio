@@ -41,8 +41,6 @@ public class EffAddReaction extends Effect {
                     try {
                         if (emote.isEmote()) {
                             message.addReaction(emote.getEmote()).queue();
-                        } else {
-                            message.addReaction(emote.getName()).queue();
                         }
                     } catch (PermissionException x) {
                         Vixio.getErrorHandler().needsPerm(bot, "add reaction", x.getPermission().getName());

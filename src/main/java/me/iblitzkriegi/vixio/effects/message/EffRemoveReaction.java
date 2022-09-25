@@ -45,7 +45,7 @@ public class EffRemoveReaction extends AsyncEffect {
             }
             for (MessageReaction messageReaction : boundMessage.getReactions()) {
                 for (Emote emote : this.emote.getAll(e)) {
-                    if (messageReaction.getReactionEmote().getName().equalsIgnoreCase(emote.getName())) {
+                    if (messageReaction.getEmoji().getName().equalsIgnoreCase(emote.getName())) {
                         try {
                             messageReaction.removeReaction(user).queue();
                         } catch (PermissionException x) {

@@ -84,7 +84,7 @@ public class ExprContent extends ChangeableSimplePropertyExpression<UpdatingMess
                 return;
             }
 
-            TextChannel boundChannel = Util.bindChannel(bot, message.getTextChannel());
+            TextChannel boundChannel = (TextChannel) Util.bindChannel(bot, message.getChannel());
             if (boundChannel == null) {
                 return;
             }

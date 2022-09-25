@@ -8,7 +8,7 @@ import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import me.iblitzkriegi.vixio.events.interaction.EvtButtonReceived;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,7 +22,6 @@ public class ExprButtonLabel extends SimpleExpression<String> {
             .setExample("button label");
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         if (!ScriptLoader.isCurrentEvent(EvtButtonReceived.ButtonInteractionReceived.class)) {
@@ -36,7 +35,7 @@ public class ExprButtonLabel extends SimpleExpression<String> {
     @Override
     protected String[] get(Event e) {
         if(e.getEventName().equals("ButtonInteractionReceived")) {
-            ButtonClickEvent bEvent = ((EvtButtonReceived.ButtonInteractionReceived) e).getJDAEvent();
+            ButtonInteractionEvent bEvent = ((EvtButtonReceived.ButtonInteractionReceived) e).getJDAEvent();
 
             return new String[]{bEvent.getButton().getLabel()};
         }

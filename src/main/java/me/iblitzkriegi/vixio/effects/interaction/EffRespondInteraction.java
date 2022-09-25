@@ -11,7 +11,9 @@ import me.iblitzkriegi.vixio.events.interaction.EvtSlashCMDReceived;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.skript.AsyncEffect;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.interactions.Interaction;
+import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
+import net.dv8tion.jda.api.interactions.components.buttons.ButtonInteraction;
+import net.dv8tion.jda.api.interactions.components.selections.SelectMenuInteraction;
 import org.bukkit.event.Event;
 
 import static me.iblitzkriegi.vixio.Vixio.getInstance;
@@ -32,17 +34,24 @@ public class EffRespondInteraction extends AsyncEffect {
 
     @Override
     protected void execute(Event e) {
-        Interaction interaction = null;
+        Message message = Util.messageFrom(this.message.getSingle(e));
+        assert message != null;
         if(e.getEventName().equals("SlashCMDReceived")) {
-            interaction = ((EvtSlashCMDReceived.SlashCMDReceived) e).getJDAEvent().getInteraction();
+            SlashCommandInteraction interaction = ((EvtSlashCMDReceived.SlashCMDReceived) e).getJDAEvent().getInteraction();
+            if(interaction.isAcknowledged()) {
+                interaction.getHook().editOriginal(message).queue();
+            } else {
+                interaction.reply(message).setEphemeral(isEphemeral).queue();
+            }
         } else if(e.getEventName().equals("ButtonInteractionReceived")) {
-            interaction = ((EvtButtonReceived.ButtonInteractionReceived) e).getJDAEvent().getInteraction();
+            ButtonInteraction interaction = ((EvtButtonReceived.ButtonInteractionReceived) e).getJDAEvent().getInteraction();
+            if(interaction.isAcknowledged()) {
+                interaction.getHook().editOriginal(message).queue();
+            } else {
+                interaction.reply(message).setEphemeral(isEphemeral).queue();
+            }
         } else if(e.getEventName().equals("SelectInteractionReceived")) {
-            interaction = ((EvtSelectReceived.SelectInteractionReceived) e).getJDAEvent().getInteraction();
-        }
-        if (interaction != null) {
-            Message message = Util.messageFrom(this.message.getSingle(e));
-            assert message != null;
+            SelectMenuInteraction interaction = ((EvtSelectReceived.SelectInteractionReceived) e).getJDAEvent().getInteraction();
             if(interaction.isAcknowledged()) {
                 interaction.getHook().editOriginal(message).queue();
             } else {

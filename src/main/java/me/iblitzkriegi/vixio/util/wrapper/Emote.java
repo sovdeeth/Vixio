@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Emote implements IMentionable {
     private final String name;
-    private net.dv8tion.jda.api.entities.Emote emote;
+    private net.dv8tion.jda.api.entities.emoji.RichCustomEmoji emote;
     private boolean isEmote = false;
     private final String mention;
 
@@ -18,7 +18,7 @@ public class Emote implements IMentionable {
         this.mention = name;
     }
 
-    public Emote(net.dv8tion.jda.api.entities.Emote emote) {
+    public Emote(net.dv8tion.jda.api.entities.emoji.RichCustomEmoji emote) {
         this.name = emote.getName();
         this.emote = emote;
         this.isEmote = true;
@@ -29,7 +29,7 @@ public class Emote implements IMentionable {
         return isEmote ? emote.getGuild() : null;
     }
 
-    public net.dv8tion.jda.api.entities.Emote getEmote() {
+    public net.dv8tion.jda.api.entities.emoji.RichCustomEmoji getEmote() {
         return isEmote ? emote : null;
     }
 

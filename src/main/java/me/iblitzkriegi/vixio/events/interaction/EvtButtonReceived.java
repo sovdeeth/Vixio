@@ -2,17 +2,16 @@ package me.iblitzkriegi.vixio.events.interaction;
 
 import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Getter;
-import me.iblitzkriegi.vixio.events.EvtReactionRemove;
 import me.iblitzkriegi.vixio.events.base.BaseEvent;
 import me.iblitzkriegi.vixio.events.base.SimpleVixioEvent;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
 import me.iblitzkriegi.vixio.util.wrapper.Emote;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 
-public class EvtButtonReceived extends BaseEvent<ButtonClickEvent> {
+public class EvtButtonReceived extends BaseEvent<ButtonInteractionEvent> {
     static {
         BaseEvent.register("button interaction received", EvtButtonReceived.class, ButtonInteractionReceived.class,
                 "button interaction receive[d]")
@@ -74,13 +73,13 @@ public class EvtButtonReceived extends BaseEvent<ButtonClickEvent> {
         EventValues.registerEventValue(ButtonInteractionReceived.class, GuildChannel.class, new Getter<GuildChannel, ButtonInteractionReceived>() {
             @Override
             public GuildChannel get(ButtonInteractionReceived event) {
-                return event.getJDAEvent().getTextChannel();
+                return event.getJDAEvent().getGuildChannel();
             }
         }, 0);
 
     }
 
-    public class ButtonInteractionReceived extends SimpleVixioEvent<ButtonClickEvent> {
+    public class ButtonInteractionReceived extends SimpleVixioEvent<ButtonInteractionEvent> {
     }
 
 }

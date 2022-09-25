@@ -13,7 +13,7 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.exceptions.PermissionException;
 import net.dv8tion.jda.api.interactions.commands.Command;
-import net.dv8tion.jda.api.interactions.commands.privileges.CommandPrivilege;
+import net.dv8tion.jda.api.interactions.commands.privileges.IntegrationPrivilege;
 import org.bukkit.event.Event;
 
 import java.util.List;
@@ -72,44 +72,44 @@ public class EffCommandPermission extends Effect {
             return;
         }
 
-        List<CommandPrivilege> oldPerms = cmd.retrievePrivileges(guild).complete();
+        List<IntegrationPrivilege> oldPerms = cmd.retrievePrivileges(guild).complete();
 
         Object[] inputs = this.inputs.getAll(e);
         for (Object input : inputs) {
             if (input instanceof Role) {
                 Role role = (Role) input;
                 if (allow == 0) {
-                    oldPerms.add(CommandPrivilege.enableRole(role.getId()));
+//                    oldPerms.add(IntegrationPrivilege.enableRole(role.getId()));
                 } else if (allow == 1) {
-                    oldPerms.add(CommandPrivilege.disableRole(role.getId()));
+//                    oldPerms.add(IntegrationPrivilege.disableRole(role.getId()));
                 } else {
-                    Optional<CommandPrivilege> optOldPerm = oldPerms.stream().filter(p -> p.getId().equals(role.getId())).findFirst();
+                    Optional<IntegrationPrivilege> optOldPerm = oldPerms.stream().filter(p -> p.getId().equals(role.getId())).findFirst();
                     optOldPerm.ifPresent(oldPerms::remove);
                 }
             } else if (input instanceof User) {
                 User user = (User) input;
                 if (allow == 0) {
-                    oldPerms.add(CommandPrivilege.enableUser(user.getId()));
+//                    oldPerms.add(IntegrationPrivilege.enableUser(user.getId()));
                 } else if (allow == 1) {
-                    oldPerms.add(CommandPrivilege.disableUser(user.getId()));
+//                    oldPerms.add(IntegrationPrivilege.disableUser(user.getId()));
                 } else {
-                    Optional<CommandPrivilege> optOldPerm = oldPerms.stream().filter(p -> p.getId().equals(user.getId())).findFirst();
+                    Optional<IntegrationPrivilege> optOldPerm = oldPerms.stream().filter(p -> p.getId().equals(user.getId())).findFirst();
                     optOldPerm.ifPresent(oldPerms::remove);
                 }
             } else if (input instanceof Member) {
                 Member member = (Member) input;
                 if (allow == 0) {
-                    oldPerms.add(CommandPrivilege.enableUser(member.getId()));
+//                    oldPerms.add(IntegrationPrivilege.enableUser(member.getId()));
                 } else if (allow == 1) {
-                    oldPerms.add(CommandPrivilege.disableUser(member.getId()));
+//                    oldPerms.add(IntegrationPrivilege.disableUser(member.getId()));
                 } else {
-                    Optional<CommandPrivilege> optOldPerm = oldPerms.stream().filter(p -> p.getId().equals(member.getId())).findFirst();
+                    Optional<IntegrationPrivilege> optOldPerm = oldPerms.stream().filter(p -> p.getId().equals(member.getId())).findFirst();
                     optOldPerm.ifPresent(oldPerms::remove);
                 }
             }
         }
         try {
-            cmd.updatePrivileges(guild, oldPerms).queue();
+//            cmd.updatePrivileges(guild, oldPerms).queue();
         } catch (PermissionException x) {
             Vixio.getErrorHandler().needsPerm(bot, "manage permissions", x.getPermission().getName());
         }

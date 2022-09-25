@@ -4,9 +4,7 @@ import ch.njol.skript.classes.Changer;
 import me.iblitzkriegi.vixio.Vixio;
 import me.iblitzkriegi.vixio.changers.ChangeableSimplePropertyExpression;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
-import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.TextChannel;
 import org.bukkit.event.Event;
 
 public class ExprChannelType extends ChangeableSimplePropertyExpression<MessageChannel, String> {

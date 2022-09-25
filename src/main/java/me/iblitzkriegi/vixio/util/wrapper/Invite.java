@@ -1,6 +1,6 @@
 package me.iblitzkriegi.vixio.util.wrapper;
 
-import net.dv8tion.jda.api.entities.BaseGuildMessageChannel;
+import net.dv8tion.jda.api.entities.StandardGuildMessageChannel;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -134,7 +134,7 @@ public class Invite {
         if (this.getChannel() == null) {
             return null;
         }
-        return ((BaseGuildMessageChannel) this.getChannel()).createInvite()
+        return ((StandardGuildMessageChannel) this.getChannel()).createInvite()
                 .setMaxAge(this.getMaxAge())
                 .setMaxUses(this.getMaxUses())
                 .setTemporary(this.isTemporary())

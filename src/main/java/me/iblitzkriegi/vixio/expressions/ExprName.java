@@ -103,36 +103,35 @@ public class ExprName extends ChangeableSimpleExpression<String> {
         Object object = this.object.getSingle(e);
 
         String name = (String) delta[0];
-        switch (mode) {
-            case SET:
-                if (object instanceof Bot) {
-                    bot.getSelfUser().getManager().setName(name).queue();
-                } else if (object instanceof GuildChannel) {
-                    GuildChannel channel = Util.bindChannel(bot, (GuildChannel) object);
+        if (mode == Changer.ChangeMode.SET) {
+            if (object instanceof Bot) {
+                bot.getSelfUser().getManager().setName(name).queue();
+            } else if (object instanceof GuildChannel) {
+                GuildChannel channel = Util.bindChannel(bot, (GuildChannel) object);
 
-                    try {
-                        if (channel.getType() == ChannelType.TEXT) {
-                            channel.getManager().setName(name.replaceAll(" ", "-")).queue();
-                        } else {
-                            channel.getManager().setName(name).queue();
-                        }
-                    } catch (PermissionException x) {
-                        Vixio.getErrorHandler().needsPerm(bot, EffChange.format(mode, "name of", this.object, bot),
-                                x.getPermission().getName());
+                try {
+                    if (channel.getType() == ChannelType.TEXT) {
+                        channel.getManager().setName(name.replaceAll(" ", "-")).queue();
+                    } else {
+                        channel.getManager().setName(name).queue();
                     }
-                } else if (object instanceof Guild) {
-                    Guild guild = Util.bindGuild(bot, (Guild) object);
-                    if (guild == null) {
-                        return;
-                    }
-
-                    try {
-                        guild.getManager().setName(name).queue();
-                    } catch (PermissionException x) {
-                        Vixio.getErrorHandler().needsPerm(bot, EffChange.format(mode, "name of", this.object, bot),
-                                x.getPermission().getName());
-                    }
+                } catch (PermissionException x) {
+                    Vixio.getErrorHandler().needsPerm(bot, EffChange.format(mode, "name of", this.object, bot),
+                            x.getPermission().getName());
                 }
+            } else if (object instanceof Guild) {
+                Guild guild = Util.bindGuild(bot, (Guild) object);
+                if (guild == null) {
+                    return;
+                }
+
+                try {
+                    guild.getManager().setName(name).queue();
+                } catch (PermissionException x) {
+                    Vixio.getErrorHandler().needsPerm(bot, EffChange.format(mode, "name of", this.object, bot),
+                            x.getPermission().getName());
+                }
+            }
         }
     }
 }

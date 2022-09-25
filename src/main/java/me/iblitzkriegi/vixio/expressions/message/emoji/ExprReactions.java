@@ -15,6 +15,8 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageReaction;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
+import net.dv8tion.jda.api.entities.emoji.RichCustomEmoji;
 import net.dv8tion.jda.api.exceptions.PermissionException;
 import org.bukkit.event.Event;
 
@@ -42,11 +44,11 @@ public class ExprReactions extends ChangeableSimpleExpression<Emote> implements 
             Message message = UpdatingMessage.convert(msg);
             List<Emote> emojis = new ArrayList<>();
             for (MessageReaction messageReaction : message.getReactions()) {
-                String name = messageReaction.getReactionEmote().getName();
-                if (messageReaction.getReactionEmote().getEmote() == null) {
+                String name = messageReaction.getEmoji().getName();
+                if (messageReaction.getEmoji().getType() == Emoji.Type.UNICODE) {
                     emojis.add(Util.unicodeFrom(name));
                 } else {
-                    emojis.add(new Emote(messageReaction.getReactionEmote().getEmote()));
+                    emojis.add(new Emote((RichCustomEmoji) messageReaction.getEmoji()));
                 }
             }
 
@@ -109,8 +111,6 @@ public class ExprReactions extends ChangeableSimpleExpression<Emote> implements 
                                         Emote emote = (Emote) o;
                                         if (emote.isEmote()) {
                                             boundMessage.addReaction(emote.getEmote()).queue();
-                                        } else {
-                                            boundMessage.addReaction(emote.getName()).queue();
                                         }
                                     } catch (IllegalArgumentException x) {
                                         Vixio.getErrorHandler().warn("Vixio attempted to add a emote to " + message.getId() + " with " + bot.getName() + " but was unable to find the emoji.");
@@ -141,7 +141,7 @@ public class ExprReactions extends ChangeableSimpleExpression<Emote> implements 
                             Emote emoji = (Emote) o;
                             if (Util.botIsConnected(bot, message.getJDA())) {
                                 for (MessageReaction messageReaction : message.getReactions()) {
-                                    if (messageReaction.getReactionEmote().getName().equals(emoji.getName())) {
+                                    if (messageReaction.getEmoji().getName().equals(emoji.getName())) {
                                         for (User user : messageReaction.retrieveUsers()) {
                                             messageReaction.removeReaction(user).queue();
                                         }

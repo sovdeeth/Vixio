@@ -48,8 +48,8 @@ public class EffEnableIntent extends Effect {
             case GUILD_VOICE_STATES:
                 ScopeMakeBot.jdaBuilder.enableCache(CacheFlag.VOICE_STATE);
                 break;
-            case GUILD_EMOJIS:
-                ScopeMakeBot.jdaBuilder.enableCache(CacheFlag.EMOTE);
+            case GUILD_EMOJIS_AND_STICKERS:
+                ScopeMakeBot.jdaBuilder.enableCache(CacheFlag.EMOJI);
                 break;
         }
 

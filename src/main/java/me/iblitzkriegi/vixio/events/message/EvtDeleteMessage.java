@@ -44,7 +44,7 @@ public class EvtDeleteMessage extends BaseEvent<MessageDeleteEvent> {
         EventValues.registerEventValue(DeleteMessageEvent.class, GuildChannel.class, new Getter<GuildChannel, DeleteMessageEvent>() {
             @Override
             public GuildChannel get(DeleteMessageEvent event) {
-                return event.getJDAEvent().getTextChannel();
+                return event.getJDAEvent().getGuildChannel();
             }
         }, 0);
 

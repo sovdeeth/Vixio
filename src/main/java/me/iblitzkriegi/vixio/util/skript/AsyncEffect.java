@@ -9,7 +9,6 @@ import ch.njol.skript.lang.Trigger;
 import ch.njol.skript.lang.TriggerItem;
 import ch.njol.skript.timings.SkriptTimings;
 import ch.njol.skript.variables.Variables;
-import me.iblitzkriegi.vixio.Vixio;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;

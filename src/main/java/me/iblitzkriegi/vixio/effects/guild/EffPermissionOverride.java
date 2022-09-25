@@ -53,16 +53,16 @@ public class EffPermissionOverride extends Effect {
                     if (input instanceof Role) {
                         Role role = (Role) input;
                         if (allow) {
-                            channel.getPermissionContainer().upsertPermissionOverride(role).setAllow(permissions).queue();
+                            channel.getPermissionContainer().upsertPermissionOverride(role).setAllowed(permissions).queue();
                         } else {
-                            channel.getPermissionContainer().upsertPermissionOverride(role).setDeny(permissions).queue();
+                            channel.getPermissionContainer().upsertPermissionOverride(role).setDenied(permissions).queue();
                         }
                     } else if (input instanceof Member) {
                         Member member = (Member) input;
                         if (allow) {
-                            channel.getPermissionContainer().upsertPermissionOverride(member).setAllow(permissions).queue();
+                            channel.getPermissionContainer().upsertPermissionOverride(member).setAllowed(permissions).queue();
                         } else {
-                            channel.getPermissionContainer().upsertPermissionOverride(member).setDeny(permissions).queue();
+                            channel.getPermissionContainer().upsertPermissionOverride(member).setDenied(permissions).queue();
                         }
                     }
                 } catch (PermissionException x) {

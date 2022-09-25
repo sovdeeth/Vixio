@@ -70,7 +70,7 @@ public class EvtMessageReceived extends BaseEvent<MessageReceivedEvent> {
         EventValues.registerEventValue(GlobalMessageReceived.class, GuildChannel.class, new Getter<GuildChannel, GlobalMessageReceived>() {
             @Override
             public GuildChannel get(GlobalMessageReceived event) {
-                return event.getJDAEvent().getTextChannel();
+                return event.getJDAEvent().getGuildChannel();
             }
         }, 0);
 

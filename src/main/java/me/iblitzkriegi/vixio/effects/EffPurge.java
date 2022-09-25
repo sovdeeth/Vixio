@@ -53,8 +53,11 @@ public class EffPurge extends Effect {
         if (updatingMessages.isEmpty()) {
             return;
         }
-        TextChannel tc = Util.bindChannel(bot, updatingMessages.get(0).getTextChannel());
-        if (bot == null || tc == null) {
+        if (bot == null) {
+            return;
+        }
+        TextChannel tc = (TextChannel) Util.bindChannel(bot, updatingMessages.get(0).getChannel());
+        if (tc == null) {
             return;
         }
         try {

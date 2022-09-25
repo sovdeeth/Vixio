@@ -278,14 +278,14 @@ public class Util {
                 if (guild == null) {
                     Set<JDA> jdaInstances = Vixio.getInstance().botHashMap.keySet();
                     for (JDA jda : jdaInstances) {
-                        Collection<net.dv8tion.jda.api.entities.Emote> emoteCollection = jda.getEmotesByName(input, false);
+                        Collection<net.dv8tion.jda.api.entities.emoji.RichCustomEmoji> emoteCollection = jda.getEmojisByName(input, false);
                         if (!emoteCollection.isEmpty()) {
                             return new Emote(emoteCollection.iterator().next());
                         }
                     }
                     return unicodeFrom(input);
                 }
-                Collection<net.dv8tion.jda.api.entities.Emote> emotes = guild.getEmotesByName(input, false);
+                Collection<net.dv8tion.jda.api.entities.emoji.RichCustomEmoji> emotes = guild.getEmojisByName(input, false);
                 if (emotes.isEmpty()) {
                     return unicodeFrom(input);
                 }
@@ -298,7 +298,7 @@ public class Util {
             if (guild == null) {
                 Set<JDA> jdaInstances = Vixio.getInstance().botHashMap.keySet();
                 for (JDA jda : jdaInstances) {
-                    net.dv8tion.jda.api.entities.Emote emote = jda.getEmoteById(id);
+                    net.dv8tion.jda.api.entities.emoji.RichCustomEmoji emote = jda.getEmojiById(id);
                     if (emote != null) {
                         return new Emote(emote);
                     }
@@ -306,9 +306,9 @@ public class Util {
                 return unicodeFrom(input);
             }
             try {
-                net.dv8tion.jda.api.entities.Emote emote = guild.getEmoteById(id);
+                net.dv8tion.jda.api.entities.emoji.RichCustomEmoji emote = guild.getEmojiById(id);
                 if (emote == null) {
-                    net.dv8tion.jda.api.entities.Emote emote1 = guild.getJDA().getEmoteById(id);
+                    net.dv8tion.jda.api.entities.emoji.RichCustomEmoji emote1 = guild.getJDA().getEmojiById(id);
                     if (!(emote1 == null)) {
                         return new Emote(emote1);
                     }

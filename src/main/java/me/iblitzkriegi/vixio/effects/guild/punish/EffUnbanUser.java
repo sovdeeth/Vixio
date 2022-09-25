@@ -9,6 +9,7 @@ import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.UserSnowflake;
 import net.dv8tion.jda.api.exceptions.PermissionException;
 import org.bukkit.event.Event;
 
@@ -40,7 +41,7 @@ public class EffUnbanUser extends Effect {
         for (Object object : users) {
             try {
                 String user = object instanceof User ? ((User) object).getId() : (String) object;
-                boundGuild.unban(user).queue();
+                boundGuild.unban(UserSnowflake.fromId(user)).queue();
             } catch (PermissionException x) {
                 Vixio.getErrorHandler().needsPerm(bot, "unban user", x.getPermission().getName());
             } catch (IllegalArgumentException x) {

@@ -6,12 +6,10 @@ import me.iblitzkriegi.vixio.events.base.BaseEvent;
 import me.iblitzkriegi.vixio.events.base.SimpleVixioEvent;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
-import me.iblitzkriegi.vixio.util.wrapper.Emote;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.SelectionMenuEvent;
+import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
 
-public class EvtSelectReceived extends BaseEvent<SelectionMenuEvent> {
+public class EvtSelectReceived extends BaseEvent<SelectMenuInteractionEvent> {
     static {
         BaseEvent.register("select interaction received", EvtSelectReceived.class, SelectInteractionReceived.class,
                 "select [menu] interaction receive[d]")
@@ -50,7 +48,7 @@ public class EvtSelectReceived extends BaseEvent<SelectionMenuEvent> {
         EventValues.registerEventValue(SelectInteractionReceived.class, String.class, new Getter<String, SelectInteractionReceived>() {
             @Override
             public String get(SelectInteractionReceived event) {
-                return event.getJDAEvent().getSelectionMenu().getId();
+                return event.getJDAEvent().getSelectMenu().getId();
             }
         }, 0);
 
@@ -64,13 +62,13 @@ public class EvtSelectReceived extends BaseEvent<SelectionMenuEvent> {
         EventValues.registerEventValue(SelectInteractionReceived.class, GuildChannel.class, new Getter<GuildChannel, SelectInteractionReceived>() {
             @Override
             public GuildChannel get(SelectInteractionReceived event) {
-                return event.getJDAEvent().getTextChannel();
+                return event.getJDAEvent().getGuildChannel();
             }
         }, 0);
 
     }
 
-    public class SelectInteractionReceived extends SimpleVixioEvent<SelectionMenuEvent> {
+    public class SelectInteractionReceived extends SimpleVixioEvent<SelectMenuInteractionEvent> {
     }
 
 }

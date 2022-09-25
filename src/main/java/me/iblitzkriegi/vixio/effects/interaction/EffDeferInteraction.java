@@ -9,8 +9,9 @@ import me.iblitzkriegi.vixio.events.interaction.EvtButtonReceived;
 import me.iblitzkriegi.vixio.events.interaction.EvtSelectReceived;
 import me.iblitzkriegi.vixio.events.interaction.EvtSlashCMDReceived;
 import me.iblitzkriegi.vixio.util.skript.AsyncEffect;
-import net.dv8tion.jda.api.events.interaction.GenericInteractionCreateEvent;
-import net.dv8tion.jda.api.interactions.Interaction;
+import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
+import net.dv8tion.jda.api.interactions.components.buttons.ButtonInteraction;
+import net.dv8tion.jda.api.interactions.components.selections.SelectMenuInteraction;
 import org.bukkit.event.Event;
 
 import static me.iblitzkriegi.vixio.Vixio.getInstance;
@@ -30,16 +31,21 @@ public class EffDeferInteraction extends AsyncEffect {
 
     @Override
     protected void execute(Event e) {
-        Interaction interaction = null;
         if(e.getEventName().equals("SlashCMDReceived")) {
-            interaction = ((EvtSlashCMDReceived.SlashCMDReceived) e).getJDAEvent().getInteraction();
+            SlashCommandInteraction interaction = ((EvtSlashCMDReceived.SlashCMDReceived) e).getJDAEvent().getInteraction();
+            if (!interaction.isAcknowledged()) {
+                interaction.deferReply(isEphemeral).queue();
+            }
         } else if(e.getEventName().equals("ButtonInteractionReceived")) {
-            interaction = ((EvtButtonReceived.ButtonInteractionReceived) e).getJDAEvent().getInteraction();
+            ButtonInteraction interaction = ((EvtButtonReceived.ButtonInteractionReceived) e).getJDAEvent().getInteraction();
+            if (!interaction.isAcknowledged()) {
+                interaction.deferReply(isEphemeral).queue();
+            }
         } else if(e.getEventName().equals("SelectInteractionReceived")) {
-            interaction = ((EvtSelectReceived.SelectInteractionReceived) e).getJDAEvent().getInteraction();
-        }
-        if (interaction != null && !interaction.isAcknowledged()) {
-            interaction.deferReply(isEphemeral).queue();
+            SelectMenuInteraction interaction = ((EvtSelectReceived.SelectInteractionReceived) e).getJDAEvent().getInteraction();
+            if (!interaction.isAcknowledged()) {
+                interaction.deferReply(isEphemeral).queue();
+            }
         }
     }
 

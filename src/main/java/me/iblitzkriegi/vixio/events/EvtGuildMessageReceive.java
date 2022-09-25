@@ -4,7 +4,6 @@ import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Getter;
-import me.iblitzkriegi.vixio.Vixio;
 import me.iblitzkriegi.vixio.events.base.BaseEvent;
 import me.iblitzkriegi.vixio.events.base.SimpleVixioEvent;
 import me.iblitzkriegi.vixio.util.UpdatingMessage;

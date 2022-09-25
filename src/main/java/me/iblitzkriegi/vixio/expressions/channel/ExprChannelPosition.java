@@ -33,7 +33,7 @@ public class ExprChannelPosition extends ChangeableSimplePropertyExpression<Obje
         if (object instanceof Role) {
             return ((Role) object).getPosition();
         } else if (object instanceof GuildChannel) {
-            return ((BaseGuildMessageChannel) object).getPosition();
+            return ((StandardGuildMessageChannel) object).getPosition();
         }
         return null;
     }
@@ -59,7 +59,7 @@ public class ExprChannelPosition extends ChangeableSimplePropertyExpression<Obje
                 GuildChannel boundChannel = Util.bindChannel(bot, (GuildChannel) object);
                 if (boundChannel != null) {
                     try {
-                        ((BaseGuildMessageChannel) boundChannel).getManager().setPosition(position).queue();
+                        ((StandardGuildMessageChannel) boundChannel).getManager().setPosition(position).queue();
                     } catch (PermissionException x) {
                         Vixio.getErrorHandler().needsPerm(bot, "set position of channel", x.getPermission().getName());
                     }

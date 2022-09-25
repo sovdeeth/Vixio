@@ -5,7 +5,6 @@ import me.iblitzkriegi.vixio.Vixio;
 import me.iblitzkriegi.vixio.changers.ChangeableSimplePropertyExpression;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
-import net.dv8tion.jda.api.entities.BaseGuildMessageChannel;
 import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import org.bukkit.event.Event;

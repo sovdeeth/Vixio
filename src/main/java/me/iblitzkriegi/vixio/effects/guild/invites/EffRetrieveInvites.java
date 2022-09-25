@@ -6,7 +6,7 @@ import ch.njol.util.Kleenean;
 import me.iblitzkriegi.vixio.Vixio;
 import me.iblitzkriegi.vixio.expressions.guild.invite.ExprRetrievedInvites;
 import me.iblitzkriegi.vixio.util.skript.AsyncEffect;
-import net.dv8tion.jda.api.entities.BaseGuildMessageChannel;
+import net.dv8tion.jda.api.entities.StandardGuildMessageChannel;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.Invite;
@@ -63,7 +63,7 @@ public class EffRetrieveInvites extends AsyncEffect {
         }
         GuildChannel guildChannel = (GuildChannel) input;
         try {
-            List<Invite> invites = ((BaseGuildMessageChannel) guildChannel).retrieveInvites().complete(true);
+            List<Invite> invites = ((StandardGuildMessageChannel) guildChannel).retrieveInvites().complete(true);
             ExprRetrievedInvites.lastRetrievedInvites = invites.stream()
                     .map(me.iblitzkriegi.vixio.util.wrapper.Invite::parseInvite)
                     .collect(Collectors.toList());

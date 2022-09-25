@@ -13,7 +13,6 @@ import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
 import me.iblitzkriegi.vixio.registration.*;
-import me.iblitzkriegi.vixio.util.Metrics;
 import me.iblitzkriegi.vixio.util.ParseOrderWorkaround;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.audio.MusicStorage;

@@ -17,7 +17,6 @@ import me.iblitzkriegi.vixio.util.embed.Title;
 import me.iblitzkriegi.vixio.util.enums.SearchableSite;
 import me.iblitzkriegi.vixio.util.skript.EnumMapper;
 import me.iblitzkriegi.vixio.util.skript.SimpleType;
-import me.iblitzkriegi.vixio.util.wrapper.Emote;
 import me.iblitzkriegi.vixio.util.wrapper.Invite;
 import me.iblitzkriegi.vixio.util.wrapper.*;
 import net.dv8tion.jda.api.*;
@@ -411,7 +410,7 @@ public class Types {
                         return null;
                     }
                     if (e.getChannelType() == ChannelType.PRIVATE) {
-                        PrivateChannel privateChannel = e.getPrivateChannel();
+                        PrivateChannel privateChannel = e.getChannel().asPrivateChannel();
                         SelfUser selfUser = privateChannel.getJDA().getSelfUser();
                         String name = discrim[0].contains("@") ? discrim[0].replaceFirst("@", "") : discrim[0];
                         if (selfUser.getName().equalsIgnoreCase(name)) {
@@ -479,7 +478,7 @@ public class Types {
                     return null;
                 }
 
-                List<TextChannel> possibleMentionedChannels = event.getMessage().getMentionedChannels();
+                List<TextChannel> possibleMentionedChannels = (List<TextChannel>) event.getMessage().getMentions().getChannels().stream().filter((c) -> c.getType() == ChannelType.TEXT);
 
                 if (possibleMentionedChannels.size() > 0) {
                     if (possibleMentionedChannels.size() > 1) {
@@ -554,7 +553,7 @@ public class Types {
                     return null;
                 }
 
-                List<TextChannel> mentionedTextChannels = message.getMentionedChannels();
+                List<TextChannel> mentionedTextChannels = (List<TextChannel>) message.getMentions().getChannels().stream().filter((c) -> c.getType() == ChannelType.TEXT);
                 if (mentionedTextChannels.size() > 0) {
                     if (mentionedTextChannels.size() > 1) {
                         return null;

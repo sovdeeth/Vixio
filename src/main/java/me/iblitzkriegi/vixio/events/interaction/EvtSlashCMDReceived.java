@@ -7,9 +7,9 @@ import me.iblitzkriegi.vixio.events.base.SimpleVixioEvent;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
-public class EvtSlashCMDReceived extends BaseEvent<SlashCommandEvent> {
+public class EvtSlashCMDReceived extends BaseEvent<SlashCommandInteractionEvent> {
     static {
         BaseEvent.register("slash command received", EvtSlashCMDReceived.class, SlashCMDReceived.class,
                 "slash command [interaction] receive[d]")
@@ -65,13 +65,13 @@ public class EvtSlashCMDReceived extends BaseEvent<SlashCommandEvent> {
         EventValues.registerEventValue(SlashCMDReceived.class, GuildChannel.class, new Getter<GuildChannel, SlashCMDReceived>() {
             @Override
             public GuildChannel get(SlashCMDReceived event) {
-                return event.getJDAEvent().getTextChannel();
+                return event.getJDAEvent().getGuildChannel();
             }
         }, 0);
 
     }
 
-    public class SlashCMDReceived extends SimpleVixioEvent<SlashCommandEvent> {
+    public class SlashCMDReceived extends SimpleVixioEvent<SlashCommandInteractionEvent> {
     }
 
 }

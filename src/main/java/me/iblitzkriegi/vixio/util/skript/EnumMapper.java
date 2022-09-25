@@ -2,7 +2,6 @@ package me.iblitzkriegi.vixio.util.skript;
 
 import ch.njol.skript.classes.Serializer;
 import ch.njol.skript.lang.ParseContext;
-import ch.njol.skript.localization.Language;
 import ch.njol.util.Validate;
 import ch.njol.yggdrasil.Fields;
 
