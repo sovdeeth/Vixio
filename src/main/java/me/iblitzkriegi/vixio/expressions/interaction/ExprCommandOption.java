@@ -19,7 +19,7 @@ public class ExprCommandOption extends SimpleExpression<Object> {
     static {
         getInstance().registerExpression(ExprCommandOption.class, Object.class, ExpressionType.SIMPLE, "[the] [slash] [command] option [with id] %string%")
             .setName("Slash Command Option")
-            .setDesc("Get the content of a Message. The content can be set and deleted.")
+            .setDesc("Get the content of a slash command option.")
             .setExample("slash command option \"name\"");
     }
 

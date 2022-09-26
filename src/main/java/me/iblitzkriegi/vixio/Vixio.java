@@ -105,7 +105,7 @@ public class Vixio extends JavaPlugin {
         getConfig().options().copyDefaults(true);
         saveConfig();
 //        Metrics metrics = new Metrics(this);
-        Documentation.setupSyntaxFile();
+//        Documentation.setupSyntaxFile();
 //        Documentation.generateJson();
         this.getCommand("vixio").setExecutor(new VixioCommand());
         useOldSkript = (Skript.getVersion().getMajor() >= 3 || (Skript.getVersion().getMajor() == 2 && Skript.getVersion().getMinor() >= 4));
