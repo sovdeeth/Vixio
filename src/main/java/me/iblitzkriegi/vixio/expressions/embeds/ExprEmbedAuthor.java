@@ -17,7 +17,7 @@ public class ExprEmbedAuthor extends SimplePropertyExpression<EmbedBuilder, Mess
                         "author", "embedbuilders")
                 .setName("Author of Embed")
                 .setDesc("Returns the author of an embed. Can be set any author.")
-                .setExample("set author of {_embed} to a author with text \"Hi Pika\" and icon \"https://i.imgur.com/TQgR2hW.jpg\"");
+                .setExample("set author of {_embed} to an author named \"Hi Pika\" and icon \"https://i.imgur.com/TQgR2hW.jpg\" and url \"https://1a3dev.github.io/VixioSite/\"");
     }
 
     @Override
