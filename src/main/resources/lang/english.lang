@@ -28,7 +28,7 @@ verificationlevels:
 gatewayintents:
     guild_members: guild members
     guild_bans: guild bans
-    guild_emojis: guild emojis
+    guild_emojis_and_stickers: guild emojis
     guild_webhooks: guild webhooks
     guild_invites: guild invites
     guild_voice_states: guild voice states

@@ -1,6 +1,6 @@
 package me.iblitzkriegi.vixio.expressions.embeds;
 
-import ch.njol.skript.classes.Changer.ChangeMode;
+import ch.njol.skript.classes.Changer;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
@@ -14,10 +14,10 @@ public class ExprEmbedAuthor extends SimplePropertyExpression<EmbedBuilder, Mess
 
     static {
         Vixio.getInstance().registerPropertyExpression(ExprEmbedAuthor.class, MessageEmbed.AuthorInfo.class,
-                "(author info|author)", "embedbuilders")
+                        "author", "embedbuilders")
                 .setName("Author of Embed")
-                .setDesc("Returns the author of an embed. Can be set to any author.")
-                .setExample("set author of {_embed} to author named \"Pikachu\"");
+                .setDesc("Returns the author of an embed. Can be set any author.")
+                .setExample("set author of {_embed} to a author with text \"Hi Pika\" and icon \"https://i.imgur.com/TQgR2hW.jpg\"");
     }
 
     @Override
@@ -33,36 +33,35 @@ public class ExprEmbedAuthor extends SimplePropertyExpression<EmbedBuilder, Mess
     }
 
     @Override
-    public Class<?>[] acceptChange(ChangeMode mode) {
-        if (mode == ChangeMode.SET || mode == ChangeMode.DELETE || mode == ChangeMode.RESET) {
+    public Class<?>[] acceptChange(Changer.ChangeMode mode) {
+        if ((mode == Changer.ChangeMode.SET || mode == Changer.ChangeMode.RESET || mode == Changer.ChangeMode.DELETE) && getExpr().isSingle()) {
             return new Class[]{
-                    MessageEmbed.AuthorInfo.class,
-                    String.class
+                    String.class,
+                    MessageEmbed.AuthorInfo.class
             };
         }
         return null;
     }
 
     @Override
-    public void change(Event e, Object[] delta, ChangeMode mode) {
-        EmbedBuilder[] embeds = getExpr().getAll(e);
-        if (embeds == null) return;
+    public void change(Event e, Object[] delta, Changer.ChangeMode mode) {
+
+        EmbedBuilder embed = getExpr().getSingle(e);
+        if (embed == null) return;
 
         switch (mode) {
-            case SET:
-                for (EmbedBuilder embedBuilder : embeds) {
-                    MessageEmbed.AuthorInfo author = delta[0] instanceof String ?
-                            new EmbedBuilder().setAuthor((String) delta[0]).build().getAuthor() :
-                            (MessageEmbed.AuthorInfo) delta[0];
-                    embedBuilder.setAuthor(author.getName(), author.getUrl(), author.getIconUrl());
-                }
-                break;
+
             case RESET:
             case DELETE:
-                for (EmbedBuilder embedBuilder : embeds) {
-                    embedBuilder.setAuthor(null, null, null);
-                }
-                break;
+                embed.setAuthor(null, null);
+                return;
+
+            case SET:
+                MessageEmbed.AuthorInfo author = delta[0] instanceof String ?
+                        new EmbedBuilder().setAuthor((String) delta[0], null).build().getAuthor()
+                        : (MessageEmbed.AuthorInfo) delta[0];
+                embed.setAuthor(author.getName(), author.getUrl(), author.getIconUrl());
+
         }
     }
 
