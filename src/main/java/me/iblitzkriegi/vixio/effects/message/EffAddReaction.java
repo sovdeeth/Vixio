@@ -10,6 +10,7 @@ import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
 import me.iblitzkriegi.vixio.util.wrapper.Emote;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.exceptions.PermissionException;
 import org.bukkit.event.Event;
 
@@ -41,6 +42,8 @@ public class EffAddReaction extends Effect {
                     try {
                         if (emote.isEmote()) {
                             message.addReaction(emote.getEmote()).queue();
+                        } else {
+                            message.addReaction(Emoji.fromUnicode(emote.getName())).queue();
                         }
                     } catch (PermissionException x) {
                         Vixio.getErrorHandler().needsPerm(bot, "add reaction", x.getPermission().getName());

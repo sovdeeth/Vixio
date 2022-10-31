@@ -40,3 +40,6 @@ gatewayintents:
     direct_message_reactions: direct message reactions
     direct_message_typing: direct message typing
     message_content: message content
+types:
+    user: user
+    emote: emote
