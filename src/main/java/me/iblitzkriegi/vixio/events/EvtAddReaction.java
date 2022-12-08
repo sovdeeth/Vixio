@@ -10,6 +10,8 @@ import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.wrapper.Bot;
 import me.iblitzkriegi.vixio.util.wrapper.Emote;
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
+import net.dv8tion.jda.api.entities.emoji.EmojiUnion;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.exceptions.RateLimitedException;
 
@@ -75,11 +77,11 @@ public class EvtAddReaction extends BaseEvent<MessageReactionAddEvent> {
         EventValues.registerEventValue(ReactionAddEvent.class, Emote.class, new Getter<Emote, ReactionAddEvent>() {
             @Override
             public Emote get(ReactionAddEvent event) {
-                Emote reactionEmote = (Emote) event.getJDAEvent().getEmoji();
-                if (!reactionEmote.isEmote()) {
+                EmojiUnion reactionEmote = event.getJDAEvent().getEmoji();
+                if (reactionEmote.getType().equals(Emoji.Type.UNICODE)) {
                     return Util.unicodeFrom(reactionEmote.getName());
                 } else {
-                    return new Emote(reactionEmote.getEmote());
+                    return new Emote(reactionEmote.getName());
                 }
             }
         }, 0);
