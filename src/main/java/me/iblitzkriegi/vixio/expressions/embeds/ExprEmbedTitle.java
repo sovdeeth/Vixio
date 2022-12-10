@@ -18,7 +18,7 @@ public class ExprEmbedTitle extends SimplePropertyExpression<EmbedBuilder, Title
                 "title", "embedbuilders")
                 .setName("Title of Embed")
                 .setDesc("Returns the title of an embed.")
-                .setExample("set the embed title of {_embed} to title with text \"hey this is a cool title!\" and no icon");
+                .setExample("set the title of {_embed} to \"Embed Title\"");
     }
 
 
