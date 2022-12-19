@@ -25,7 +25,20 @@ To use Vixio, you must first have a bot on your Discord server. To do so, follow
 - Now, in a skript add this:
 ```
 on skript load:
-        login to "BOT TOKEN HERE" with the name "NAME OF BOT HERE"
+  create vixio bot:
+    enable the guild members intent
+    enable the guild bans intent
+    enable the guild emojis intent
+    enable the guild invites intent
+    enable the guild voice states intent
+    enable the guild presences intent
+    enable the guild messages intent
+    enable the guild message reactions intent
+    enable the direct messages intent
+    enable the direct message reactions intent
+    enable the direct message typing intent
+    enable the message content intent
+    login to "BOT TOKEN HERE" with the name "BOT NAME HERE"
 ```
 (or using a trigger of your choice)
 
