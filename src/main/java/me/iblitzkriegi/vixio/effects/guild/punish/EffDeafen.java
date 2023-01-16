@@ -14,7 +14,7 @@ import org.bukkit.event.Event;
 public class EffDeafen extends Effect {
 
     static {
-        Vixio.getInstance().registerEffect(EffDeafen.class, "[<un>]deafen %members% [(with|using) %bot%]")
+        Vixio.getInstance().registerEffect(EffDeafen.class, "[<un>]deafen %members% [(with|using) %bot/string%]")
                 .setName("Deafen user")
                 .setDesc("Lets you deafen or undeafen a member/user. They must be in a voice channel for this to take effect.")
                 .setExample(
@@ -33,20 +33,20 @@ public class EffDeafen extends Effect {
     }
 
     private Expression<Member> members;
-    private Expression<Bot> bot;
+    private Expression<Object> bot;
     private boolean newState;
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         members = (Expression<Member>) exprs[0];
-        bot = (Expression<Bot>) exprs[1];
+        bot = (Expression<Object>) exprs[1];
         newState = parseResult.regexes.size() == 0;
         return true;
     }
 
     @Override
     protected void execute(Event e) {
-        Bot bot = this.bot.getSingle(e);
+        Bot bot = Util.botFrom(this.bot.getSingle(e));
         if (bot == null) {
             return;
         }

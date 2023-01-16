@@ -44,7 +44,7 @@ public class ExprMembers extends SimpleExpression<Member> {
             members = guild.getMembers();
             return members.toArray(new Member[members.size()]);
         } else if (object instanceof GuildChannel) {
-            List<Member> members = ((StandardGuildMessageChannel) object).getMembers();
+            List<Member> members = ((StandardGuildChannel) object).getMembers();
             return members.toArray(new Member[members.size()]);
         }
 
