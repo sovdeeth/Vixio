@@ -14,6 +14,8 @@ import java.util.Collections;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import static com.google.common.collect.Iterables.size;
+
 public class TrackScheduler extends AudioEventAdapter {
     private final AudioPlayer player;
     private final BlockingQueue<AudioTrack> queue;
@@ -80,9 +82,11 @@ public class TrackScheduler extends AudioEventAdapter {
     }
 
     public void forceTrackToPlay(AudioTrack track) {
-        AudioTrack trackToReadd = player.getPlayingTrack().makeClone();
+        AudioTrack trackToReadd = player.getPlayingTrack();
+
         ArrayList currentQueue = new ArrayList<>(queue);
-        currentQueue.set(0, trackToReadd);
+
+        if (trackToReadd != null) currentQueue.add(0, trackToReadd.makeClone());
         queue.clear();
         player.stopTrack();
         player.playTrack(track);
