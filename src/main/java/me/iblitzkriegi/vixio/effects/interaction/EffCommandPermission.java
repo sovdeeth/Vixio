@@ -22,7 +22,7 @@ import java.util.Optional;
 public class EffCommandPermission extends Effect {
     static {
         Vixio.getInstance().registerEffect(EffCommandPermission.class,
-                "(allow|1¦deny|2¦reset) %roles/users/members% access to %string% in %guild% [with %bot/string%]")
+                        "(allow|1¦deny|2¦reset) %roles/users/members% access to %string% in %guild% [with %bot/string%]")
                 .setName("Command Permission in Guild")
                 .setDesc("Allow, or deny a role or a member permissions to a command")
                 .setExample(
@@ -61,7 +61,7 @@ public class EffCommandPermission extends Effect {
         Optional<Command> cmdOpt = cmdList.stream().filter(c -> c.getName().equals(cmdName)).findFirst();
         // Global Commands
         if(!cmdOpt.isPresent()) {
-            cmdList = bot.getJDA().retrieveCommands().complete();
+            cmdList = bot.getJDA().getShardById(0).retrieveCommands().complete();
             cmdOpt = cmdList.stream().filter(c -> c.getName().equals(cmdName)).findFirst();
         }
         if(cmdOpt.isPresent()) {
