@@ -18,7 +18,7 @@ public class ParseOrderWorkaround {
 
     private static <E extends SyntaxElement> void ensureFirst(Collection<SyntaxElementInfo<? extends E>> elements) {
         Optional<SyntaxElementInfo<? extends E>> optionalElementInfo = elements.stream()
-                .filter(info -> info.c.getName().equals(EffChange.class.getName()))
+                .filter(info -> info.getElementClass().getName().equals(EffChange.class.getName()))
                 .findFirst();
         optionalElementInfo.ifPresent(e -> {
             elements.remove(e);

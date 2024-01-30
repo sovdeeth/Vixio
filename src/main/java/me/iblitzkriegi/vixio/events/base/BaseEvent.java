@@ -94,7 +94,7 @@ public abstract class BaseEvent<D extends net.dv8tion.jda.api.events.Event> exte
 
         String name = null;
         for (SkriptEventInfo<?> event : Skript.getEvents()) {
-            if (bukkitClass.equals(event.c)) {
+            if (bukkitClass.equals(event.getElementClass())) {
                 name = event.getName();
             }
         }

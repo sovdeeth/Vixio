@@ -16,6 +16,7 @@ import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.StringMode;
 import ch.njol.skript.util.Utils;
+import ch.njol.skript.util.Version;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.StringUtils;
 import me.iblitzkriegi.vixio.util.Util;
@@ -55,7 +56,11 @@ public class DiscordCommandFactory {
 
         Method _PARSE_I = null;
         try {
-            _PARSE_I = SkriptParser.class.getDeclaredMethod("parse_i", String.class, int.class, int.class);
+
+            if (Skript.getVersion().isSmallerThan(new Version(2,8)))
+                _PARSE_I = SkriptParser.class.getDeclaredMethod("parse_i", String.class, int.class, int.class);
+            else
+                _PARSE_I = SkriptParser.class.getDeclaredMethod("parse_i", String.class);
             _PARSE_I.setAccessible(true);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
