@@ -1,5 +1,7 @@
 package me.iblitzkriegi.vixio.commands;
 
+import ch.njol.skript.ScriptLoader;
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.Trigger;
 import ch.njol.skript.lang.TriggerItem;
@@ -7,12 +9,16 @@ import ch.njol.skript.lang.util.SimpleEvent;
 import ch.njol.skript.log.ParseLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.util.Utils;
+import ch.njol.skript.util.Version;
+import me.iblitzkriegi.vixio.util.ReflectionUtils;
 import me.iblitzkriegi.vixio.util.Util;
 import net.dv8tion.jda.api.entities.ChannelType;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class DiscordCommand {
 
@@ -25,12 +31,11 @@ public class DiscordCommand {
     private final String usage;
     private final String pattern;
     private final List<String> bots;
-
-    private final Trigger trigger;
+    private final List<TriggerItem> items;
 
     private final List<DiscordArgument<?>> arguments;
 
-    public DiscordCommand(File script, String name, String pattern, List<DiscordArgument<?>> arguments, List<Expression<String>> prefixes,
+    public DiscordCommand(String name, String pattern, List<DiscordArgument<?>> arguments, List<Expression<String>> prefixes,
                           List<String> aliases, String description, String usage, List<String> roles,
                           List<ChannelType> executableIn, List<String> bots, List<TriggerItem> items) {
         this.name = name;
@@ -46,9 +51,7 @@ public class DiscordCommand {
         this.prefixes = prefixes;
         this.bots = bots;
         this.arguments = arguments;
-
-        trigger = new Trigger(script, "discord command " + name, new SimpleEvent(), items);
-
+        this.items = items;
     }
 
     public boolean execute(DiscordCommandEvent event) {
@@ -74,8 +77,11 @@ public class DiscordCommand {
             }
 
             // again, bukkit apis are mostly sync so run it on the main thread
-            Util.sync(() -> trigger.execute(event));
-
+            Util.sync(() -> {
+                if (items.isEmpty())
+                    return;
+                TriggerItem.walk(items.get(0), event);
+            });
         } finally {
             log.stop();
         }
@@ -120,10 +126,6 @@ public class DiscordCommand {
         return usableAliases;
     }
 
-    public Trigger getTrigger() {
-        return trigger;
-    }
-
     public List<ChannelType> getExecutableIn() {
         return executableIn;
     }
@@ -131,9 +133,4 @@ public class DiscordCommand {
     public List<String> getRoles() {
         return roles;
     }
-
-    public File getScript() {
-        return trigger.getScript();
-    }
-
 }

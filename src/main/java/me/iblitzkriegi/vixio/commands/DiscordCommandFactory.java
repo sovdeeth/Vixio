@@ -82,7 +82,10 @@ public class DiscordCommandFactory {
         SkriptParser parser = new SkriptParser(args, SkriptParser.PARSE_LITERALS, ParseContext.COMMAND);
         SkriptParser.ParseResult res = null;
         try {
-            res = (SkriptParser.ParseResult) PARSE_I.invoke(parser, command.getPattern(), 0, 0);
+            if (Skript.getVersion().isSmallerThan(new Version(2,8)))
+                res = (SkriptParser.ParseResult) PARSE_I.invoke(parser, command.getPattern(), 0, 0);
+            else
+                res = (SkriptParser.ParseResult) PARSE_I.invoke(parser, command.getPattern());
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
@@ -155,9 +158,7 @@ public class DiscordCommandFactory {
         for (Signature storage : this.commandMap.keySet()) {
             DiscordCommand discordCommand = storage.getCommand();
             if (discordCommand.getName().equalsIgnoreCase(command)) {
-                if (discordCommand.getScript().equals(node.getConfig().getFile())) {
-                    Skript.error("A discord command with the name \"" + command + "\" is already defined in " + discordCommand.getScript().getName());
-                }
+                Skript.error("A discord command with the name \"" + command + "\" is already defined in " + discordCommand.getName());
             }
         }
 
@@ -270,7 +271,7 @@ public class DiscordCommandFactory {
         this.currentArguments = currentArguments;
         try {
             discordCommand = new DiscordCommand(
-                    node.getConfig().getFile(), command, pattern.toString(), currentArguments,
+                    command, pattern.toString(), currentArguments,
                     prefixes, aliases, description, usage, roles, places, bots, ScriptLoader.loadItems(trigger)
             );
         } finally {
