@@ -2,11 +2,13 @@ package me.iblitzkriegi.vixio.events.base;
 
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
+import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.config.Config;
 import ch.njol.skript.lang.*;
 import ch.njol.skript.log.SkriptLogger;
 import me.iblitzkriegi.vixio.Vixio;
 import me.iblitzkriegi.vixio.registration.Registration;
+import me.iblitzkriegi.vixio.util.ReflectionUtils;
 import me.iblitzkriegi.vixio.util.Util;
 import me.iblitzkriegi.vixio.util.VixioGetter;
 import org.bukkit.event.Event;
@@ -94,7 +96,7 @@ public abstract class BaseEvent<D extends net.dv8tion.jda.api.events.Event> exte
 
         String name = null;
         for (SkriptEventInfo<?> event : Skript.getEvents()) {
-            if (bukkitClass.equals(event.getElementClass())) {
+            if (bukkitClass.equals(ReflectionUtils.getElementClass(event))) {
                 name = event.getName();
             }
         }

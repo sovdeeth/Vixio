@@ -1,6 +1,12 @@
 package me.iblitzkriegi.vixio.util;
 
 
+import ch.njol.skript.Skript;
+import ch.njol.skript.classes.ClassInfo;
+import ch.njol.skript.lang.SkriptEventInfo;
+import ch.njol.skript.lang.SkriptParser;
+import ch.njol.skript.lang.SyntaxElementInfo;
+import ch.njol.skript.util.Version;
 import org.bukkit.Bukkit;
 
 import java.lang.reflect.Constructor;
@@ -178,5 +184,19 @@ public class ReflectionUtils {
         }
         return null;
 
+    }
+
+    public static Class<?> getElementClass(Object element) {
+        if (Skript.getVersion().isSmallerThan(new Version(2,8)))
+            return getField(element.getClass(), element, "c");
+        else
+            if (element instanceof SkriptEventInfo<?>)
+                return ((SkriptEventInfo<?>) element).getElementClass();
+            else if (element instanceof SyntaxElementInfo<?>)
+                return ((SyntaxElementInfo<?>) element).getElementClass();
+            else if (element instanceof ClassInfo<?>)
+                return ((ClassInfo<?>) element).getC();
+            else
+                return null;
     }
 }
